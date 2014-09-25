@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="es">
+
+	<head>
+		<meta charset="utf-8">
+
+		<title>¿ya pasó el bus?</title>
+
+		<meta name="description" content="¿ya pasó el bus?">
+		<meta name="author" content="Diego Munguía">
+
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<link rel="stylesheet" href="http://lab.hakim.se/reveal-js/css/reveal.min.css">
+		<link rel="stylesheet" href="http://lab.hakim.se/reveal-js/css/theme/default.css" id="theme">
+		<link rel="stylesheet" href="groovy/custom.css">
+
+		<!-- For syntax highlighting -->
+		<link rel="stylesheet" href="groovy/googlecode.css">
+
+		<!-- If the query includes 'print-pdf', use the PDF print sheet -->
+		<script>
+			document.write( '<link rel="stylesheet" href="http://lab.hakim.se/reveal-js/css/print/' + ( window.location.search.match( /print-pdf/gi ) ? 'pdf' : 'paper' ) + '.css" type="text/css" media="print">' );
+		</script>
+
+		<!--[if lt IE 9]>
+		<script src="lib/js/html5shiv.js"></script>
+		<![endif]-->
+	</head>
+
+	<body>
+
+		<div class="reveal">
+
+			<!-- Any section element inside of this container is displayed as a slide -->
+			<div class="slides">
+
+				<section>
+					<h1>¿ya pasó el bus?</h1>
+				</section>
+
+				<section>
+	            <section>
+	               <h2>funcionalidad</h2>
+	            </section>
+	            <section>
+	            	<h3>¿cómo puedo ir de Desamparados de Alajuela a Higuito de Desamparados?</h3>
+	            </section>
+	            <section>
+	            	<h3>¿cuánto debo pagar en pases para ir de Heredia a Cartago?</h3>
+	            </section>
+	            <section>
+	            	<h3>¿si salgo ya cuánto voy a tardar en llegar de Santa Ana a San Rafael de Heredia?</h3>
+	            </section>
+	            <section>
+	            	<h3>¿ya pasó el bus?</h3>
+	            </section>
+				</section>
+
+				<section>
+					<section>
+						<h2>detalles técnicos</h2>
+					</section>
+					<section>
+						<h3>software para dispositivos móviles</h3>
+					</section>
+					<section>
+						<h3>software libre</h3>
+					</section>
+					<section>
+						<h3>crowdsourcing</h3>
+					</section>
+				</section>
+
+				<section>
+					<section>
+						<h2>retos computacionales</h2>
+					</section>
+					<section>
+						<h3>cálculo eficiente y efectivo de rutas</h3>
+					</section>
+					<section>
+						<h3>dispositivos móviles de características modestas</h3>
+					</section>
+					<section>
+						<h3>minimizar el uso de batería del dispositivo móvil</h3>
+					</section>
+				</section>
+
+			</div>
+		</div>
+
+		<script src="http://lab.hakim.se/reveal-js/lib/js/head.min.js"></script>
+		<script src="http://lab.hakim.se/reveal-js/js/reveal.min.js"></script>
+
+		<script>
+
+			// Full list of configuration options available here:
+			// https://github.com/hakimel/reveal.js#configuration
+			Reveal.initialize({
+				controls: true,
+				progress: true,
+				history: true,
+				center: true,
+
+				theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
+				transition: Reveal.getQueryHash().transition || 'default', // default/cube/page/concave/zoom/linear/fade/none
+
+				// Optional libraries used to extend on reveal.js
+				dependencies: [
+					{ src: 'http://lab.hakim.se/reveal-js/lib/js/classList.js', condition: function() { return !document.body.classList; } },
+					{ src: 'http://lab.hakim.se/reveal-js/plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: 'http://lab.hakim.se/reveal-js/plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: 'http://lab.hakim.se/reveal-js/plugin/highlight/highlight.js', async: true, callback: function() { 
+							hljs.initHighlightingOnLoad(); 
+							hljs.tabReplace = '    ';
+						}
+					},
+					{ src: 'http://lab.hakim.se/reveal-js/plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+					{ src: 'http://lab.hakim.se/reveal-js/plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }
+					// { src: 'plugin/search/search.js', async: true, condition: function() { return !!document.body.classList; } }
+					// { src: 'plugin/remotes/remotes.js', async: true, condition: function() { return !!document.body.classList; } }
+				]
+			});
+
+		</script>
+
+	</body>
+</html>
