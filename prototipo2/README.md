@@ -296,4 +296,6 @@ Código fuente
 
 Ver [Github](https://github.com/LabExperimental-SIUA/buses/tree/master/prototipo2)
 
+Licencia
+--------
 <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-sa/4.0/88x31.png" /></a><br />Trabajo de <span xmlns:cc="http://creativecommons.org/ns#" property="cc:attributionName">Adrian Araya, Juan Manuel Esquivel</span> licencia bajo <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/">Creative Commons Attribution-ShareAlike 4.0 International License</a>.
