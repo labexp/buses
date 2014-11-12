@@ -33,7 +33,7 @@ Se observa una línea de metro con diferentes puntos en ella.
 
 
 <center>
-![wiframe-linea-tren](images/Wireframe2-07.png)
+![wiframe-linea-tren](https://github.com/LabExperimental-SIUA/buses/blob/master/prototipo2/images/Wireframe2-07.png)
 </center>
 
 Desarrollando el prototipo del Widget:
@@ -43,14 +43,14 @@ Desarrollando el prototipo del Widget:
 - Una vez con el proyecto creado, en el directorio res dentro del main creamos una carpeta con el nombre drawable, en la cual se van a agregar la imágenes que vamos a utilizar.
 
 <center>
-![ejemplo1](images/ejemplo1.png)
+![ejemplo1](https://github.com/LabExperimental-SIUA/buses/blob/master/prototipo2/images/ejemplo1.png)
 </center>
 
 **Estas serán las imágenes utilizadas para el prototipo**
 <center>
-![L1](images/l_06.png) ![L2](images/l_02.png) ![L3](images/l_03.png) ![L4](images/l_09.png)
+![L1](https://github.com/LabExperimental-SIUA/buses/blob/master/prototipo2/images/l_06.png) ![L2](https://github.com/LabExperimental-SIUA/buses/blob/master/prototipo2/images/l_02.png) ![L3](https://github.com/LabExperimental-SIUA/buses/blob/master/prototipo2/images/l_03.png) ![L4](https://github.com/LabExperimental-SIUA/buses/blob/master/prototipo2/images/l_09.png)
 
-![L5](images/l_08.png) ![L6](images/l_04.png) ![L7](images/l_05.png) ![L8](images/l_10.png)
+![L5](https://github.com/LabExperimental-SIUA/buses/blob/master/prototipo2/images/l_08.png) ![L6](https://github.com/LabExperimental-SIUA/buses/blob/master/prototipo2/images/l_04.png) ![L7](https://github.com/LabExperimental-SIUA/buses/blob/master/prototipo2/images/l_05.png) ![L8](https://github.com/LabExperimental-SIUA/buses/blob/master/prototipo2/images/l_10.png)
 </center>
 
 - Nos dirigimos a modificar el archivo main.xml del directorio res > layout del proyecto, en el cual vamos a definir un elemento LinearLayout con algunos atributos de este mismo. 
