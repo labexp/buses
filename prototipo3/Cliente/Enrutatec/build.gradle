@@ -1,0 +1,70 @@
+buildscript {
+    repositories {
+        mavenCentral()
+        maven { url 'http://download.crashlytics.com/maven' }
+    }
+    dependencies {
+        //Se cambió por error de apache
+        classpath 'com.android.tools.build:gradle:1.3.0'
+        classpath 'com.crashlytics.tools.gradle:crashlytics-gradle:1.+'
+    }
+}
+
+apply plugin: 'com.android.application'
+apply plugin: 'crashlytics'
+
+repositories {
+    mavenCentral()
+    maven { url 'http://download.crashlytics.com/maven' }
+    maven { url "https://jitpack.io" }
+}
+
+android {
+    compileSdkVersion 23
+    buildToolsVersion "23.0.1"
+
+    //Se agregó debido a un error con biblioteca de apache, url: http://developer.android.com/about/versions/marshmallow/android-6.0-changes.html#behavior-apache-http-client
+    useLibrary 'org.apache.http.legacy'
+
+    defaultConfig {
+        minSdkVersion 15
+        targetSdkVersion 23
+        versionCode 14
+        versionName "1.7.4"
+    }
+
+/*
+    signingConfigs {
+       release {
+           storeFile file(RELEASE_STORE_FILE)
+           storePassword RELEASE_STORE_PASSWORD
+           keyAlias RELEASE_KEY_ALIAS
+           keyPassword RELEASE_KEY_PASSWORD
+       }
+    }
+*/
+    buildTypes {
+        release {
+            minifyEnabled false
+//            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt'
+//            signingConfig signingConfigs.release
+        }
+    }
+
+}
+
+
+dependencies {
+    //Cambié de 22.2.0 a 23.0.1 en los dos siguiente
+    compile 'com.android.support:gridlayout-v7:23.0.1'
+    compile 'com.android.support:appcompat-v7:23.0.1'
+    compile ('com.mapbox.mapboxsdk:mapbox-android-sdk:0.7.4@aar'){
+        transitive=true
+    }
+    compile 'com.crashlytics.android:crashlytics:1.+'
+    compile('com.github.afollestad.material-dialogs:core:0.8.5.0@aar') {
+        transitive = true
+    }
+
+    compile 'com.squareup.okhttp:okhttp:2.5.0'
+}
