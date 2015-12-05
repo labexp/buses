@@ -8,11 +8,11 @@ Este repositorio contiene componentes de software que permiten mover datos desde
 #### Consumidor de datos abiertos Portal CTP
 
 El componente `buses-ctp` consume datos del portal de datos abiertos del Consejo de Transporte Público de Costa Rica (http://datos.ctp.go.cr/home).
-El portal de datos abiertos del CTP contiene datos geoposicionales de los recorridos realizados por diversas rutas de autobús en Costa Rica. Este componente consume estos datos y los importa en el base de datos de este proyecto.
+El portal de datos abiertos del CTP contiene datos geoposicionales de los recorridos realizados por diversas rutas de autobús en Costa Rica. Este componente consume estos datos y los importa en la base de datos de este proyecto.
 
 #### Productor de datos abiertos OSM
 
-El componente `buses-osm` exporta datos de la base de datos de este proyecto y los importa en OpenStreetMap (https://www.openstreetmap.org/).
+El componente `buses-osm` exporta las rutas de transporte público almacenadas en la base de datos de este proyecto y las importa en OpenStreetMap (https://www.openstreetmap.org/).
 
 #### Visualizador de rutas
 
