@@ -82,3 +82,5 @@ Con `postman` o `curl` enviar un `POST` a `http://localhost:8080/buses/v0.1/rout
     ]
 }
 ```
+
+Ojo: la lista de puntos `path` contiene todos los puntos de la ruta, incluyendo los mismos puntos de las paradas.
