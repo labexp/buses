@@ -1,0 +1,25 @@
+source 'https://rubygems.org'
+
+#OSM api client
+gem 'rosemary'
+
+#Autentication gem
+gem 'oauth'
+
+#Orientdb http client connection
+gem 'active-orient'
+
+#JSON object parser
+gem 'json'
+
+#Figaro set enviromental variables
+gem 'figaro'
+
+#Testing gem
+gem 'test-unit'
+
+#Unit test complemet
+gem 'test-unit-full'
+
+#Testing coverage tool
+gem 'simplecov'
