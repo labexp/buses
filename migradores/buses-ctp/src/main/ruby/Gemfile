@@ -12,6 +12,9 @@ gem 'active-orient'
 #JSON object parser
 gem 'json'
 
+#HTML Sanitizer
+gem 'rails-html-sanitizer'
+
 #Figaro set enviromental variables
 gem 'figaro'
 
