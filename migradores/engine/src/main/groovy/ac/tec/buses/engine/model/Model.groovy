@@ -1,6 +1,5 @@
 package ac.tec.buses.engine.model
 
-import com.github.eugene.kamenev.orient.document.OrientDocument
 import com.github.eugene.kamenev.orient.graph.Edge
 import com.github.eugene.kamenev.orient.graph.Vertex
 import com.orientechnologies.orient.core.metadata.schema.OType
@@ -27,12 +26,14 @@ import groovy.transform.EqualsAndHashCode
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-@OrientDocument
+@Vertex
 @CompileStatic
 @EqualsAndHashCode
 class Point {
     double latitude
     double longitude
+
+    static mapping = {}
 
     Map toJson() { [latitude: latitude, longitude: longitude] }
 }
@@ -47,7 +48,7 @@ class BusStop {
     List<BusStop> connectedStops
 
     static mapping = {
-        location(type: OType.EMBEDDED)
+        location(type: OType.LINK)
         connectedStops(edge: Travel)
     }
 
@@ -65,7 +66,7 @@ class Travel {
     List<Point> path = []
 
     static mapping = {
-        path(type: OType.EMBEDDEDLIST)
+        path(type: OType.LINKLIST)
     }
 
     Map toJson() { [path: path*.toJson()] }
