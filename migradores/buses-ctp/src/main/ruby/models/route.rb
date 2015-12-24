@@ -1,15 +1,13 @@
-require_relative 'point'
-require_relative 'stop'
 require 'json'
 
 class Route
+
   attr_accessor :id, :path, :stops
-  def initialize(params)
-    @id ||= params[:id]
-    @path = params[:path]
-    @stops = params[:stops]
-    @path  ||= []
-    @stops ||=[]
+
+  def initialize(id, path, stops)
+    @id = id
+    @path = path # Point List
+    @stops = stops # Stop List
   end
 
   def to_json
@@ -20,14 +18,14 @@ class Route
 
     stops_array = []
     @stops.each do |stop|
-      stops_array.push({name:stop.name,location:{latitude:stop.lat,longitude:stop.lon}})
+      stops_array.push({name:stop.name,location:{latitude:stop.location.lat,longitude:stop.location.lon}})
     end
 
     route = {}
     route['id'] = @id.to_s
     route['path'] = points_array
     route['stops'] = stops_array
-    return route
+    route
   end
 end
 

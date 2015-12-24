@@ -1,8 +1,9 @@
 class Stop
-  attr_accessor :name, :lat, :lon
-  def initialize(name,lat,lon)
-    @name ||= name
-    @lat ||= lat
-    @lon ||= lon
+
+  attr_accessor :name, :location
+
+  def initialize(name, location)
+    @name = name
+    @location = location # Location type is Point
   end
 end

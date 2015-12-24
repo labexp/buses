@@ -54,7 +54,6 @@ module BusesApi
     end
 
     def check_response_codes(response)
-      p response
       body = response['message']
       case response.code.to_i
         when 200 then return

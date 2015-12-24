@@ -1,0 +1,196 @@
+===========================================================
+| Bitácora de trabajo individual		       	  |
+| Proyecto: “Datos abiertos: componentes de software 	  |
+|  	para consumir y exportar conjuntos de datos sobre |
+| 	rutas de transporte público en Costa Rica”     	  |
+| Melvin Elizondo Pérez					  |
+| Instituto Tecnológico de Costa Rica 			  |
+===========================================================
+
+
+Miércoles 2 de diciembre
+------------------------------
+
+Hice un repaso sobre casos de uso y cómo realizar su diagrama. Además cuales son las partes que componen la descripción de los casos de uso (pueden variar). Deben incluir al menos el nombre, el actor, los pasos y las alternativas en los pasos.
+
+También leí un poco sobre qué es un Project Charter y creé el documento compartido con las partes que debe tener para trabajarlo (basado en el template del TEC digital).
+
+Hice una estructura de carpetas en Drive para trabajar los distintos entregables por semana.
+
+
+Jueves 4 de diciembre
+------------------------------
+
+Estuve explorando la página del MOPT de datos libres (datos.ctp.go.cr/home/), observando como el API devuelve los datos. La velocidad con que lo hace es relativamente buena. KMZ es una extensión de archivos que permite comprimir archivos (similar a zip), empaquetando archivos KML e imágenes que sirven para identificar datos geográficos. 
+
+
+Viernes 5 de diciembre
+------------------------------
+
+Seguí el tutorial sobre APIs que se encuentra en Codecademy refrescando algunos conocimientos acerca de client-server, request-response y demás. Además cree me base en el código para hacer una consulta al API de Twitter para hacer una al API del MOPT.
+
+Leí notas acerca de cómo crear un API restful: 
+http://apigee.com/about/blog/technology/restful-api-design-nouns-are-good-verbs-are-bad
+
+
+Lunes 7 de diciembre
+------------------------------
+
+Reunión con el cliente (Diego) para hacer algunas aclaraciones con respecto a licenciamiento del proyecto y otros aspectos.
+
+Finalización del documento de visión del proyecto, con sus partes como el diagrama de proyecto y cronograma de actividades.
+
+
+Miércoles 9 de diciembre
+------------------------------
+
+Creación de los wireframes para el prototipo de la aplicación.
+
+Investigación sobre cómo dibujar una ruta usando el framework leaflet y un plugin para routing, seguí los tutos pero no logré dibujar aún. Falta seguir probando.
+
+
+Viernes 11 de diciembre
+------------------------------
+
+Realización del prototipo en la herramienta Pencil, una versión para móvil y otra para web.
+
+Investigación del API de OSM para entender su funcionamiento.
+    Creación de cuenta para obtener Consumer Key y Consumer Secret.
+    Uso de Script autorizar la aplicación y obtener el token y token secret.
+    Pruebas con solicitudes GET a la API (datos del perfil, información de nodo, etc).
+
+Existen tres elementos básicos en OSM:
+- nodes (Punto en la superficie de la Tierra definido por lat y long: silla de un parque, pozo de agua, etc…)
+- ways (lista ordenada de 2 a 2000 nodos que define una polilínea: ríos, calles)
+- relations (relación entre uno o más elementos: una ruta, un multipoligono).
+
+
+Domingo 13 de diciembre
+------------------------------
+
+Repaso del API del OSM  http://wiki.openstreetmap.org/wiki/API_v0.6#URL_.2B_authentication
+
+Pruebas para creación de ruta de bus, esta debe ser lo que se conoce como un ”relation” en OSM para lo que se deben crear ya sea “Ways” o “Points”. En nuestro caso las calles o ways ya existen entonces para crear una ruta sería únicamente de indicar por cuáles calles pasa una ruta de autobús. Estuve con Daniel haciendo pruebas y logramos crear una relation (ruta) que involucraba dos ways (calles). Falta mostrarle este avance a nuestro cliente.
+
+
+Martes 15 de diciembre
+------------------------------
+
+Reunión con Diego Munguia (cliente) para mostrarle el prototipo y definir algunas cosas para la iteración 1, como el modelo de datos del proyecto de los buses.
+
+Envío del código solicitado como prototipo junto con la carta de aceptación del cliente.
+
+Creé el documento del ERS junto con las partes que debía llevar. Estuve trabajando en algunas de estas partes hasta las 10pm aproximadamente (tenía que madrugar al otro día).
+
+
+Miércoles 16 de diciembre
+------------------------------
+
+Redefinición de los requerimientos para el componente consumidor.
+
+Antes:
+- Obtener datos de los recorridos de buses desde el API del MOPT-CTP.
+- Realizar el parseo de los datos al modelo definido del proyecto.
+- Ingresar los datos parseados en la base de datos del proyecto.
+
+Después:
+- Obtener los datos de los recorridos de buses desde el API del MOPT-CTP.
+- Obtener los datos de las paradas de buses desde el API del MOPT-CTP.
+- Extraer datos relevantes de los recorridos como nombre, número ruta y coordenadas por donde pasa.
+- Extraer la latitud y longitud, así como el nombre de cada parada.
+- Asociar una parada a una ruta.
+- Crear un JSON con la estructura del modelo de una ruta, donde se agreguen las coordenadas del path y los stops.
+- Guardar la información de la ruta en la base de datos.
+
+Creación del diagrama de casos de uso para el ERS y de las descripciones de cada uno, así como su diagrama de secuencia y actividad. 
+
+Análisis de la estructura del JSON devuelto por el API del MOPT-CTP con la información de las paradas. Encontré que el nombre del recorrido de las paradas parece coincidir con el nombre recorrido de las rutas.
+
+
+Jueves 17 de diciembre
+------------------------------
+
+Finalización del documento ERS, pero queda pendiente revisar bien los diagramas y crear una tabla de contenido.
+
+Creé la estructura para el SAD y el Plan de pruebas según los template subidos por la profesora al TEC Digital.
+
+Llenado de algunas de las partes del SAD, falta definir formalmente la arquitectura para la creación de los diagramas del SAD.
+
+
+Viernes 18 de diciembre
+------------------------------
+
+Creación de las minutas de contacto con el cliente.
+
+Diseño inicial de la arquitectura para el componente consumidor (falta coordinar reunión con cliente para reafirmar modelo) y realizar algunas aclaraciones.
+
+
+Sábado 19 de diciembre
+------------------------------
+
+Trabajé en el documento de Plan de Pruebas llenando partes como: 
+- Introduction
+- Software Risk Issues
+- Features not to be tested
+- Test deliverables
+- Responsabilities
+
+Redefinición de la arquitectura del componente consumidor. Hicimos algunos cambios en la arquitectura tras realizar una reunión con el cliente para aclarar detalles.
+
+
+Domingo 20 de diciembre
+------------------------------
+
+Instalación de OrientDB para hacer pruebas con el engine del api desarrollado en el proyecto de los buses, para crear rutas en OrientDB, tuvimos algunos inconvenientes que nos detuvieron por errores presentados.
+
+Empecé a realizar una revisión final del ERS.
+
+
+Lunes 21 de diciembre
+------------------------------
+
+Correcciones finales al ERS en diagramas y redacción. Descargué el PDF final.
+
+Empezamos con la finalización del Plan de Pruebas. La meta es dejarlo listo el día de hoy.
+
+Para borrar una base de datos en OrientDB -> drop database remote:localhost/testgraphdb1 root xyz
+
+Logramos hacer un Post de un JSON de una ruta a OrientDB.
+
+
+Martes 22 de diciembre
+------------------------------
+
+Finalizacion del documento de arquitectura del software.
+
+Análisis de los datos del MOPT representando las rutas en el mapa para intentar encontrar un orden de las secciones de coordenadas, es difícil ya que encontramos que dividen la ruta en varios segmentos entonces el final de un segmento debe coincidir con el comienzo o final de otro segmento (de manera que sean secuenciales) de esta forma los podriamos unir.
+
+Trabajo en asociar paradas a rutas, pero el archivo está demasiado inconsistente muchas faltas de ortografía y los recorridos no coinciden muchas veces.
+
+
+Miércoles 23 de diciembre
+------------------------------
+
+Estuve analizando los datos devueltos para establecer una forma de asociar las paradas con su ruta, para esto encontré que la única manera de relacionarlos es mediante el campo recorrido de los datos. Sin embargo en algunos casos hay faltas de ortografía que no permiten asociarlo, como:
+	Aluelita -> Alajuelita
+	Paracito -> Parasito
+
+En otros casos vienen los lugares con mayúsculas y en otros lugares no. También para con las tildes. 
+	San José -> San Jose
+	Barrio cristobal -> Barrio Cristobal
+
+Para solucionar esto se debe hacer un lowercase de las palabras y eliminar los acentos. 
+
+Otro problema es que en el recorrido de las paradas algunas veces vienen más lugares que en los de las rutas, o viceversa, lo que no asegura que se trate de la misma ruta (aunque sea solo una la que coincida). Por lo tanto tiene que haber un "match" exacto para estar seguro que esa parada pertenece a la ruta que se esta considerando.
+
+Para esto, la manera es separar el recorrido por palabras porque en algunos lados los recorridos coinciden pero el orden de los lugares es diferente. Por lo tanto se puede separar los lugares de cada recorrido y verificar que estos coincidan.
+
+Otro punto es que se debe hacer un split por el simbolo '-' que es el encargado de separar los lugares del recorrido
+pero luego se debe eliminar los espacios para que esto no afecte el match. Por ejm:
+	Ruta San Jose- Alajuela -> San Jose-Alajuela
+
+Jueves 24 de diciembre
+------------------------------
+
+Integración de los componentes.
+Refactorización de métodos y parámetros.
