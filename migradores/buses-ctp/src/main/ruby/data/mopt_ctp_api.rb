@@ -9,10 +9,10 @@ class MoptCtpApi < DataSource
   end
 
   def get_next_route
-
+    nil
   end
 
   def clean(row)
-
+    []
   end
 end

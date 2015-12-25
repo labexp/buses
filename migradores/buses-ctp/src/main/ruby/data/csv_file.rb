@@ -2,14 +2,16 @@ require 'rubygems'
 require 'sanitize'
 require_relative 'datasource'
 require_relative '../services/logging'
+require_relative '../models/stop'
+require 'csv'
 
 class CsvFile < DataSource
 
   include Logging
 
   def initialize(filename=nil)
-    @ways_f = filename[1]
-    @stops_f = filename[2]
+    @ways_f = filename[0]
+    @stops_f = filename[1]
     @curr_stop = 1
     @curr_fid = -1
     @route_gen = RouteGenerator.new

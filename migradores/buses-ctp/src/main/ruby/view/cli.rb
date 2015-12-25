@@ -13,7 +13,7 @@ class Cli
     end
   end
 
-  private
+
     def exec(command)
       tokens = command.split(' ')
       case tokens[0]
@@ -28,6 +28,7 @@ class Cli
         puts 'Me diste #{tokens[0]} -- No tengo idea que hacer con eso.'
       end
     end
+
 
     def import(type, source)
       if type=='-f'
@@ -57,5 +58,4 @@ class Cli
     def export
 
     end
-
 end

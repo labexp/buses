@@ -10,16 +10,22 @@ class RouteGenerator
   def gen_id
     arr_id = []
     index = [0, 1, 5,7,11,13] # positions for key words.
+    if @info_list.length >= 23
+      index << 23
+    else
+      index << 14
+    end
+
     index.each do |i|
       if not arr_id.include? @info_list[i]
         arr_id << @info_list[i]
       end
     end
-    id = ""
+    id = ''
     arr_id.each do |e|
-      id = id + " "+e
+      id = id+' '+e
     end
-    id
+    id.strip
   end
 
   # Generates path for route.
@@ -94,7 +100,7 @@ class RouteGenerator
           best_pos = pos
         end
       end
-      path.insert(best_pos,stop) if best_pos != -1
+      path.insert(best_pos,stop.location) if best_pos != -1
     end
     path
   end
