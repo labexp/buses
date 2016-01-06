@@ -1,8 +1,10 @@
-require 'rubygems'
 require 'sanitize'
+
 require_relative 'datasource'
-require_relative '../services/logging'
-require_relative '../models/stop'
+require_relative '../../buses-common/services/logging'
+require_relative '../../buses-common/models/stop'
+require_relative '../../buses-common/models/route'
+require_relative '../../buses-common/models/point'
 require 'csv'
 
 class CsvFile < DataSource

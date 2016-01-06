@@ -13,7 +13,7 @@ gem 'active-orient'
 gem 'json'
 
 #HTML Sanitizer
-gem 'rails-html-sanitizer'
+gem 'sanitize'
 
 #Figaro set enviromental variables
 gem 'figaro'
@@ -26,3 +26,6 @@ gem 'test-unit-full'
 
 #Testing coverage tool
 gem 'simplecov'
+
+
+

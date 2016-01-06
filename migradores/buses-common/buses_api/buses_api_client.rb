@@ -15,10 +15,6 @@ module BusesApi
 
     default_timeout 10
 
-    def find_route(id)
-      #TODO: Not implemented yet
-    end
-
     def save(route)
       raise TypeError,"The value must be Route type" unless route.is_a? Route
       create(route)
@@ -26,9 +22,18 @@ module BusesApi
       #update(route)
     end
 
+
+    def get_route(id)
+      find_route(id)
+    end
+
     private
     def create(route)
       post(route.class.to_s.downcase, body:JSON.generate(route.to_json))
+    end
+
+    def find_route(id)
+      get("route/#{id}")
     end
 
     def api_url(url)
@@ -36,11 +41,15 @@ module BusesApi
     end
 
     def put(url)
-      #TODO:Not implemented yet
+      #TODO : Not implemented yet
     end
 
     def post(url, options = {})
       do_request(:post, url, options)
+    end
+
+    def get(url, options = {})
+      do_request(:get,url,options)
     end
 
     def do_request(method, url, options = {})

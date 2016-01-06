@@ -1,5 +1,5 @@
-require_relative 'logging'
-require_relative '../models/point'
+require_relative '../../buses-common/services/logging'
+require_relative '../../buses-common/models/point'
 
 class RouteGenerator
 
