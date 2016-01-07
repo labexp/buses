@@ -16,7 +16,7 @@ class Cli
     end
   end
 
-
+  private
     def exec(command)
       tokens = command.split(' ')
       case tokens[0]
@@ -25,30 +25,26 @@ class Cli
           tokens[3]!=nil
           import(tokens[1],[tokens[2],tokens[3]])
         else
-          print_error 'Modo de uso import <-f,-a> <ways> <stops>'
+          print_error 'Usage: import <-f,-a> <ways> <stops>'
         end
       when 'export'
-
         if tokens[1].nil?
-          print_error 'Modo de uso: export [-s base_uri] <route_id>'
+          print_error 'Usage: export [-s base_uri] <route_id>'
         end
 
         if tokens[1] == '-s' and !tokens[2].nil?
-
           puts "Rosemary Base URI changed to http://#{tokens[2]}"
           @rosemary_uri = tokens[2]
         else
           export(tokens[1..-1]) unless tokens[1].nil?
         end
-
       when 'exit'
         return
       when 'help'
         help
       else
-        puts "Me diste #{tokens[0]} -- No tengo idea que hacer con eso."
+        puts "You gave me #{tokens[0]} -- I don't know what to do with that."
       end
-
     end
 
 
@@ -60,37 +56,76 @@ class Cli
           if route.id != "" && route.path != []
             response = busesapi.save(route)
             if response['status'] == 200
-              puts "Ruta #{route.id} creada correctamente"
+              puts "Route #{route.id} created succesfully."
             else
-              puts "Error agregando ruta #{route.id}."
-              puts "Para más información ver logs."
+              print "Error adding route #{route.id}. "
+              puts "For more information see logs file."
             end
           else
-            puts "Error agregando ruta #{route.id}."
-            puts "Para más información ver logs."
+            print "Error adding route #{route.id}. "
+            puts "For more information see logs file."
           end
         end
-        puts "Proceso Terminado"
+        puts "Process done."
       elsif type=='-a'
         mopt_api = MoptCtpApi.new(source)
-        puts "Esta opción no esta disponible."
+        puts "This option is not available."
       end
+    end
+
+    def get_route
+      {
+      "id": "400",
+          "stops": [
+          {
+              "name": "La parada por el palo",
+              "location": {
+                  "latitude": 9.894389,
+                  "longitude": -81.38932
+              }
+          },
+          {
+              "name": "El rancho de la esquina",
+              "location": {
+                  "latitude": 9.43843,
+                  "longitude": -84.43784
+              }
+          }
+        ],
+          "path": [
+          {
+              "latitude": 9.894389,
+              "longitude": -81.38932
+          },
+          {
+              "latitude": 9.32832,
+              "longitude": -81.38232
+          },
+          {
+              "latitude": 10.4384,
+              "longitude": -84.438943
+          },
+          {
+              "latitude": 9.43843,
+              "longitude": -84.43784
+          }
+      ]
+      }
     end
 
     def export(id)
       id = id.join(' ')
       busesapi = BusesApi::Api.new
-      route = busesapi.get_route id
-      p route #Ok, the route exist, we can proceed
-
-      Rosemary::Api.base_uri "http://#{@rosemary_uri}"
+      route = get_route # busesapi.get_route(id)
+      route = JSON.parse(route.to_json)
+      Rosemary::Api.base_uri 'api06.dev.openstreetmap.org'
+      # Rosemary::Api.base_uri "http://#{@rosemary_uri}"
       Rosemary::Api.default_timeout 20
-      #TODO : Extract username and password with figaro to variables
-      auth_client = Rosemary::BasicAuthClient.new('Duxel','duxelosm')
+      auth_client = Rosemary::BasicAuthClient.new(ENV["OSM_USR"], ENV["OSM_PWD"])
       api = Rosemary::Api.new(auth_client)
       osmapi = OSMBusesApi.new(api)
-      route = RouteParser.new.parse(route)
-      p osmapi.add_route(route,"Creating test with route id #{m_route.id}")
+      m_route = RouteParser.new.parse(route)
+      p osmapi.post_route(m_route,"Creating test with route id #{m_route.id}")
     end
 
     def help
@@ -99,11 +134,11 @@ class Cli
       puts 'import: import data from file or api source'
       puts '  Usage: import <-f,-a> <ways> <stops>'
       puts 'export:'
-      puts '  Uso: export [-s source] <route_id>'
+      puts '  Usage: export [-s source] <route_id>'
       puts 'help'
-      puts '  Uso: help'
+      puts '  Usage: help'
       puts 'exit'
-      puts '  Uso: exit'
+      puts '  Usage: exit'
       puts ''
     end
 
