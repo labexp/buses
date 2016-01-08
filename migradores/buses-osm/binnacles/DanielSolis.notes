@@ -1,8 +1,45 @@
-===========================================================
-| Bitácora de trabajo individual		       	  |
-| Proyecto: “Datos abiertos: componentes de software 	  |
-|  	para consumir y exportar conjuntos de datos sobre |
-| 	rutas de transporte público en Costa Rica”     	  |
-| Daniel Solís Méndez					  |
-| Instituto Tecnológico de Costa Rica 			  |
-===========================================================
+ ========================================================
+| Bitácora de trabajo individual		       	  		 |
+| Proyecto: “Datos abiertos: componentes de software 	 |
+|  	para consumir y exportar conjuntos de datos sobre    |
+| 	rutas de transporte público en Costa Rica”     	     |
+| Daniel Solís Méndez					                 |
+| Instituto Tecnológico de Costa Rica 			         |
+ ========================================================
+
+ Lunes 4 de Enero
+______________________________________________________________________
+
+
+ Hicimos una reunion con el Cliente para ver el resultado de la iteracion 1 que por cierto dijo que estaba complacido con el resultado.
+
+ Trabajamos en la estructuracion nueva del proyecto
+
+ Establecimos criterios para el inicio de la iteracion 2
+
+
+___________________________________________________________________________
+
+
+Martes 5 de Enero
+____________________________________________________________________________
+
+Hice una investigacion para ver cuales tags eran los indicados para poner en las rutas del OSM
+
+Trabaje en hacer que el codigo de la primera iteracion funcionara con la nueva estructura de carpetas
+
+Trabaje en los modulos de parser para traducir un objeto json en un objeto ruta del modelo
+
+Trabaje en el Cli del proyecto agregando nuevos metodos, el de salir y el de ayuda para ver los comandos disponibles
+
+Trabaje en el comando export para unir los metodos de las demas clases y servicios programados
+
+Hice pruebas con el OSM y con Rosemary para probar si el diseño del modelo para importar en OSM era correcto
+
+Quedan algunos cambios que hacer en el codigo y tambien hace falta hacer todos los logs para el proceso
+
+Hace falta integrar el modulo de osm_buses_api que esta trabajando MEL, se asumen metodos para terminar el metodo de export en el cli
+
+Hacen falta validaciones en la cli, dado que el usuario puede equivocarse, ademas faltan validaciones de valores nulos que podria retornar el servidor en el objeto ruta, entre otros posibles.
+
+
