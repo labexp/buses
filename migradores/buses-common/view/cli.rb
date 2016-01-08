@@ -73,6 +73,7 @@ class Cli
       end
     end
 
+    # Temporary method to simulate received JSON.
     def get_route
       {
       "id": "400",
@@ -118,12 +119,7 @@ class Cli
       busesapi = BusesApi::Api.new
       route = get_route # busesapi.get_route(id)
       route = JSON.parse(route.to_json)
-      Rosemary::Api.base_uri 'api06.dev.openstreetmap.org'
-      # Rosemary::Api.base_uri "http://#{@rosemary_uri}"
-      Rosemary::Api.default_timeout 20
-      auth_client = Rosemary::BasicAuthClient.new(ENV["OSM_USR"], ENV["OSM_PWD"])
-      api = Rosemary::Api.new(auth_client)
-      osmapi = OSMBusesApi.new(api)
+      osmapi = OSMBusesApi.new
       m_route = RouteParser.new.parse(route)
       p osmapi.post_route(m_route,"Creating test with route id #{m_route.id}")
     end
