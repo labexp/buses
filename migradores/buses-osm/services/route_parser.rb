@@ -5,8 +5,6 @@ require_relative '../../buses-common/models/route'
 class RouteParser
 
   def parse(route)
-    p route
-
     id = get_id(route['id'])
     path = get_path(route['path'])
     stops = get_stops(route['stops'])

@@ -6,10 +6,17 @@ class OSMBusesApi
 
   MAX_NODES = 2000
 
-  def initialize(api)
-    raise TypeError unless api.is_a? Rosemary::Api
-    @api = api
+  def initialize
+    # TODO: Change to production base_uri.
+    Rosemary::Api.base_uri 'api06.dev.openstreetmap.org'
+    Rosemary::Api.default_timeout 20
+    auth_client = Rosemary::BasicAuthClient.new(ENV["OSM_USR"], ENV["OSM_PWD"])
+    @api = Rosemary::Api.new(auth_client)
     @changeset = nil
+  end
+
+  def change_base_uri(uri)
+    Rosemary::Api.base_uri uri
   end
 
   # Method to post route on OpenStreetMap
