@@ -10,7 +10,7 @@ class Cli
   def run
     command = ''
     while command != 'exit'
-      print 'BusesCli> '
+      print 'MigratorsCli> '
       command = gets.chomp
       exec(command)
     end
@@ -29,14 +29,23 @@ class Cli
         end
       when 'export'
         if tokens[1].nil?
-          print_error 'Usage: export [-s base_uri] <route_id>'
+          print_error 'Usage: export [-s base_uri] [-f] <route(s)>'
         end
 
         if tokens[1] == '-s' and !tokens[2].nil?
-          puts "Rosemary Base URI changed to http://#{tokens[2]}"
+          puts "Rosemary Base URI changed to #{tokens[2]}"
           @rosemary_uri = tokens[2]
+          if tokens[3] == '-f' && tokens[4]!=nil
+            export(tokens[4])
+          else
+            export_route(tokens[1..-1]) unless tokens[1].nil?
+          end
         else
-          export(tokens[1..-1]) unless tokens[1].nil?
+          if tokens[1] == '-f' && tokens[2]!=nil
+            export(tokens[2])
+          else
+            export_route(tokens[1..-1]) unless tokens[1].nil?
+          end
         end
       when 'exit'
         return
@@ -114,14 +123,26 @@ class Cli
       }
     end
 
-    def export(id)
+    def export(source)
+      File.readlines(source).each do |id|
+        export_route(id)
+      end
+    end
+
+    def export_route(id)
       id = id.join(' ')
       busesapi = BusesApi::Api.new
-      route = get_route # busesapi.get_route(id)
-      route = JSON.parse(route.to_json)
-      osmapi = OSMBusesApi.new
-      m_route = RouteParser.new.parse(route)
-      p osmapi.post_route(m_route,"Creating test with route id #{m_route.id}")
+      route = get_route #busesapi.get_route(id)
+      if route.nil?
+        puts "Route #{m_route.id} does not exist on database."
+      else
+        route = JSON.parse(route.to_json)
+        osmapi = OSMBusesApi.new
+        m_route = RouteParser.new.parse(route)
+        changeset = osmapi.post_route(m_route,"Creating test with route id #{m_route.id}")
+        puts "Route #{m_route.id} sucessfully added to OSM with changeset #{changeset}"
+      end
+
     end
 
     def help

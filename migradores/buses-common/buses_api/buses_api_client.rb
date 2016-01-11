@@ -22,7 +22,6 @@ module BusesApi
       #update(route)
     end
 
-
     def get_route(id)
       find_route(id)
     end
