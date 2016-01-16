@@ -29,4 +29,6 @@ interface RoutesService {
      * @param path <code>[[latitude: 9.947145, longitude: -84.051987], ...]</code> Contains all the points in order from beginning to end for the route, including the points for the stops
      */
     void save(String routeId, List<Map> stops, List<Map> path)
+
+    def getById(String id)
 }

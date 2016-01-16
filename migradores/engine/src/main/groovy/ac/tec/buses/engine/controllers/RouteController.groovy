@@ -1,5 +1,6 @@
 package ac.tec.buses.engine.controllers
 
+import ac.tec.buses.engine.model.BusStop
 import ac.tec.buses.engine.services.RoutesService
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.web.bind.annotation.*
@@ -67,8 +68,15 @@ class RouteController extends BaseController {
      */
     @RequestMapping(method = RequestMethod.POST)
     @ResponseBody
-    Map batchPost(@RequestBody Map route) {
+    Map save(@RequestBody Map route) {
         routeService.save(route.id, route.stops, route.path)
         return [status: 200]
+    }
+
+
+    @RequestMapping(value = 'id/{id}', method = RequestMethod.GET)
+    @ResponseBody
+    def getById(@PathVariable String id) {
+        routeService.getById(id)
     }
 }
