@@ -1,0 +1,109 @@
+ ========================================================
+| Bitácora de trabajo individual		       	  		 |
+| Proyecto: “Datos abiertos: componentes de software 	 |
+|  	para consumir y exportar conjuntos de datos sobre    |
+| 	rutas de transporte público en Costa Rica”     	     |
+| Daniel Solís Méndez					                 |
+| Instituto Tecnológico de Costa Rica 			         |
+ ========================================================
+
+
+_____________________________________________________________________
+
+ Lunes 4 de Enero
+______________________________________________________________________
+
+
+ Hicimos una reunion con el Cliente para ver el resultado de la iteracion 1 que por cierto dijo que estaba complacido con el resultado.
+
+ Trabajamos en la estructuracion nueva del proyecto
+
+ Establecimos criterios para el inicio de la iteracion 2
+
+
+___________________________________________________________________________
+
+Martes 5 de Enero
+____________________________________________________________________________
+
+Hice una investigacion para ver cuales tags eran los indicados para poner en las rutas del OSM
+
+Trabaje en hacer que el codigo de la primera iteracion funcionara con la nueva estructura de carpetas
+
+Trabaje en los modulos de parser para traducir un objeto json en un objeto ruta del modelo
+
+Trabaje en el Cli del proyecto agregando nuevos metodos, el de salir y el de ayuda para ver los comandos disponibles
+
+Trabaje en el comando export para unir los metodos de las demas clases y servicios programados
+
+Hice pruebas con el OSM y con Rosemary para probar si el diseño del modelo para importar en OSM era correcto
+
+Quedan algunos cambios que hacer en el codigo y tambien hace falta hacer todos los logs para el proceso
+
+Hace falta integrar el modulo de osm_buses_api que esta trabajando MEL, se asumen metodos para terminar el metodo de export en el cli
+
+Hacen falta validaciones en la cli, dado que el usuario puede equivocarse, ademas faltan validaciones de valores nulos que podria retornar el servidor en el objeto ruta, entre otros posibles.
+
+
+__________________________________________________
+
+Miercoles 6 de Enero
+___________________________________________________
+
+Estuve trabando en la creacion del ERS
+
+Trabaje en la introduccion y en la descripcion del produto.
+
+También teniamos la consulta sobre como deberian ser los documentos así que hicimos la consulta con la profesora.
+
+__________________________________________________
+
+Miercoles 7 de Enero
+___________________________________________________
+
+Dividimos los casos de uso correspondientes para cada uno, quedamos en que vamos a realizar 6 para esta iteracion
+
+Me corresponden 3 de los requerimientos
+
+Empecé con la creacion de los diagramas que es como lo mas tedioso del documento
+
+
+__________________________________________________
+
+Jueves 8 de Enero
+___________________________________________________
+
+Ayudé a Mel viendo el código que él estaba haciendo ya que mi parte del desarrollo habia terminado ayudé a Mel con algunas cosas del Cli.
+
+Sigo haciendo los diagramas correspondientes y detallando los casos de Uso en el ERS
+
+
+__________________________________________________
+
+Domingo 11 de Enero
+___________________________________________________
+
+Por motivos personales no pude trabajar en las documetaciones dias anteriores
+
+Me queda por revisar bien el ERS y empezar con el Plan de Pruebas.
+
+El ERS queda terminado y listo para enviar
+
+Trabajé en la documentacion del plan de pruebas y queda terminada 
+
+Agregue al domuento las partes relevantes para esta iteracion, por los atrazos no pude terminarlo pero es tarde
+
+Para manana queda temprano revisarlo y terminar e Manual de Prueba
+
+__________________________________________________
+
+Lunes 12 de Enero
+___________________________________________________
+
+Queda finalizado el Plan de pruebas
+
+Queda finalizado el Manual de usuario
+
+Hice las aclaraciones correspondientes para el modulo del productor de osm en el manual
+
+Todas las especificaciones quedan aclaradas en el manual de usuario, el manual contiene informacion del Migrador tambien ya que el cli es el mismo.

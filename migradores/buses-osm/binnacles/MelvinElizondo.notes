@@ -1,0 +1,95 @@
+===========================================================
+| Bitácora de trabajo individual		       	  |
+| Proyecto: “Datos abiertos: componentes de software 	  |
+|  	para consumir y exportar conjuntos de datos sobre |
+| 	rutas de transporte público en Costa Rica”     	  |
+| Melvin Elizondo Pérez					  |
+| Instituto Tecnológico de Costa Rica 			  |
+===========================================================
+
+Sábado 2 de enero
+------------------------------
+
+Cree la estructura en Google Drive para manejar todos los entregables de la iteración #2 (estructura básica de los documentos).
+
+Queda pendiente coordinar reunión con Diego para revisión de iteración 1 y con María para revisión de documentos entregados.
+
+
+Lunes 4 de enero
+------------------------------
+
+Estuve analizando los supuestos que habíamos realizado anteriormente como parte del prototipo y llegue a la conclusión de que no siempre podemos representar una ruta utilizando ways que ya se encuentran definidos en OSM ya que especialmente en el caso de los centros de las cuidades estos cuentan con muchas calles e intersecciones y los buses realizan un recorrido donde no siempre atraviesan las calles en su totalidad por lo que no podemos asociar toda una calle al recorrido de la ruta si un segmento de la calle nunca es atravesado por el autobus.
+
+Se me ocurren alternativas para esto:
+- Realizar un solo way con todos los puntos que represente el recorrido completo de la ruta (aunque iria contra la forma de definir rutas de OSM)
+- Buscar alguna manera de crear ways con unicamente los segmentos atravesados por el autobus de un way (podria ser un poco pesado computacionalmente).
+
+
+NOTA: ‘mejora’ para asociar parada a ruta en Consumidor. 
+Comparar todas las coordenadas de las rutas contra el punto de la parada y si se encuentra lo suficientemente cerca, pertenece, de lo contrario no pertenece.
+Para estos habría que definir un epsilon que sea la distancia tolerable para decidir.
+(Tomaría más tiempo del que toma actualmente).
+
+
+Martes 5 de enero
+------------------------------
+
+Estuve investigando cuales son las etiquetas que se deben de usar para representar una ruta de bus en OpenStreetMap.
+Tras analizar y leer la documentación de OSM me di cuenta que cada elemento debe llevar sus propios tags que den una descripción de a que hace alusión. Entonces las etiquetas deben quedar de esta forma: 
+
+Para los ways:
+	highway = unclassified
+	name = Ruta San José - Heredia (parte x de n) <- esto en caso que se necesiten varios ways.
+
+Para los stops (nodos que representan los stops):
+	highway = bus_stop
+
+Para el relation
+	route = bus
+	type = route
+	name =  Ruta San José - Heredia
+
+Se podría agregar también el operador de la ruta. Al no poseer este dato en el modelo de datos del proyecto de información de transporte público, entonces se podría representar como EPYPSA
+	operator = EPYPSA
+
+Se podrian agregar mas datos como un ref que se utiliza especialmente en las rutas para indicar el número de ruta y en network se cubre información acerca de la red de calles. Ejemplo:  network=US:I ref=95 Interstate 95 in the United States
+
+
+Jueves 7 de enero
+------------------------------
+
+Estuve trabajando en el OsmBusesApi creando los elementos de OSM para poder definir una ruta. Para esto es necesario construir un objeto tipo “relation” donde se incluirán como sus miembros objetos tipo way y tipo node.
+
+Los objetos de tipo way son un segmento del recorrido definido básicamente por muchos nodos conectados entre sí, que representan el recorrido del bus. Por su parte los objetos node son usados para denotar las paradas de autobús que posee el recorrido.
+
+Para realizar toda la creación de la ruta es necesario crear una serie de ways (tomando en cuenta que el máximo número de nodos de un way es 2000) y agregarlos como miembros del relation. De la misma forma se crean nodos y se agregan al relation para representar las paradas de la ruta.
+
+Externalice los datos de la cuenta de OSM en variables de ambiente.
+
+Inicié con la documentación de los requerimientos en el ERS.
+
+
+Viernes 8 de enero
+------------------------------
+
+Creé los diagramas de casos de uso, actividad y secuencia de los requerimientos funcionales, además de las descripciones de los requerimientos.
+
+Hice el manual de usuario para la utilización del CLI en la iteración 2.
+
+Me queda pendiente hacer el plan de pruebas y registrar en logs los errores en el código.
+
+
+Sábado 9 de enero
+------------------------------
+
+Hice las minutas de comunicación por chat con el cliente. Además modifique el código del CLI para que el argumento que recibe el comando export pueda ser un nombre de archivo que contenga todos los ids que se quieran agregar (esto en caso de que sean muchos y evitar tener que ingresarlos uno a uno). La opción para exportar una única ruta por su id sigue disponible.
+
+Realicé el plan de pruebas de la iteración dos.
+
+
+Domingo 10 de enero
+------------------------------
+
+Terminé el manual de usuario según la nueva metodología para su funcionamiento que se basa en que el CLI puede recibir como argumento un id de ruta específico o ya bien un nombre de archivo donde se presenten en sus líneas múltiples identificadores. Esto para facilitar la exportación de muchas rutas sin la necesidad de tener que ingresar cada una por separado.
+
+Realicé algunas modificaciones al código para que esa metodología fuera posible. Además subí mi bitácora al folder específico para la iteración dos en Github.

@@ -6,4 +6,8 @@ class Point
     @lon = lon
   end
 
+  def ==(point2)
+    self.lat == point2.lat && self.lon==point2.lon
+  end
+
 end

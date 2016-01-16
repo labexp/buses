@@ -1,0 +1,159 @@
+===========================================================
+| Bitácora de trabajo individual		       	  |
+| Proyecto: “Datos abiertos: componentes de software 	  |
+|  	para consumir y exportar conjuntos de datos sobre |
+| 	rutas de transporte público en Costa Rica”     	  |
+| Daniel Solís Méndez					  |
+| Instituto Tecnológico de Costa Rica 			  |
+===========================================================
+
+
+Viernes 5 de diciembre
+------------------------------
+
+Trabajé en el documento de proyect charter, además investigué información relacionada con open street map.
+
+Hay documentación bastante extensa sobre el API de OSM pero si no se tiene el más mínimo conocimiento es bastante pesado asimilar tanta información con respecto a cómo es que funciona.
+
+
+Lunes 7 de diciembre
+------------------------------
+
+Finalización del documento de visión del proyecto, con sus partes como el diagrama de proyecto y cronograma de actividades.
+
+Reunión por hangouts con el cliente para aclarar temas del prototipo y los wireframes.
+
+
+Miércoles 9 de diciembre
+------------------------------
+
+Según los requerimientos del cliente se trabaja en el desarrollo del prototipo para el cliente,
+se hacen dibujos y aclaraciones para los wireframes.
+
+
+Viernes 11 de diciembre
+------------------------------
+
+Investigué algunas bibliotecas en ruby para poder manejar el api de 
+Creación de cuenta para obtener Consumer Key y Consumer Secret.
+Creación de cuentas para obtener Consumer Key y Consumer Secret en el sandbox de OSM. -> api06.dev.openstreetmap.com
+En la página de OSM nos encontramos unos códigos de ruby para poder obtener el token y el token secret
+Costó un poco hacerlo funcionar, primero hubo que hacer un entendimiento de cómo era que el script funcionaba
+
+Pruebas utilizando el api de GET (datos del perfil, información de nodo, etc).
+Se intentó hacer pruebas con otras bibliotecas pero no fueron satisfactorias ni exitosas.
+Se hizo una prueba con una biblioteca llamada rosemary para insertar información, la biblioteca encapsula el api de OSM y provee métodos para facilitar su uso.
+La biblioteca solo retornaba ‘Service Unavailable’
+
+
+Sábado 12 de diciembre
+------------------------------
+
+Estuve investigando a profundidad el api de OSM, además había que hacer una compresión de sus elementos:
+- Node
+- Way
+- Member
+- Relation
+
+Luego de eso hice más investigación de bibliotecas que podríamos usar, pero para Ruby no existen muchas opciones viables para esto.
+
+Entre varias pruebas encontré otra vez la referencia a la biblioteca de rosemary, entonces intenté esta vez y funcionó hacer conexión.
+
+Queda pendiente hacer pruebas para crear elementos y entender mejor la biblioteca.
+
+
+Domingo 13 de diciembre
+------------------------------
+
+Hice un script de prueba para el prototipo, encontramos que la biblioteca tiene muchas inconsistencias, aún así es lo mejor que hay hasta el momento, a pesar de las inconsistencias la biblioteca pareciera funcionar bien, al menos cumple con las necesidades que necesitamos suplir.
+
+Hice una pequeña prueba creando dos nodos y uniendolos como miembros de una relación, los dos puntos como era de esperarse se unieron y presentaron como una línea en el mapa de OSM.
+
+Después hicimos otra prueba con dos calles (ways) para crear una ruta, la relación tiene que estar marcada con tags de rute y el de tipo específico.
+
+La prueba fue exitosa.
+
+
+Martes 15 de diciembre
+------------------------------
+
+Reunión con Diego Munguia (cliente) para mostrarle el prototipo y definir algunas cosas para la iteración 1, como el modelo de datos del proyecto de los buses.
+Envio del codigo solicitado como prototipo junto con la carta de aceptación del cliente.
+Creación del documento del ERS junto con las partes que debía llevar. 
+
+
+Miércoles 16 de diciembre
+------------------------------
+
+Redefinición de los requerimientos para el componente consumidor.
+Creación del diagrama de casos de uso para el ERS y de las descripciones de cada uno, así como su diagrama de secuencia y actividad. 
+Análisis de la estructura del JSON devuelto por el API del MOPT-CTP con la información de las paradas.
+
+
+Jueves 17 de diciembre
+------------------------------
+
+Finalización del documento ERS. Creación de la estructura para el SAD y el Plan de pruebas según los template subidos por la profesora al TEC Digital.
+
+Llenado de algunas de las partes del SAD, falta definir formalmente la arquitectura para la creación de los diagramas del SAD.
+
+
+Viernes 18 de diciembre
+------------------------------
+
+Se trabaja en la documentación del SAD, además me he reunido con mi compañero Melvin para discutir sobre la arquitectura del proyecto.
+
+Hemos creado diagramas y representación de objetos y capas de la arquitectura.
+
+Trabaje en la creación de diagramas para la documentación
+
+
+Sábado 19 de diciembre
+------------------------------
+
+He trabajado en el plan de pruebas, poniendo información relevante del proyecto y terminando las partes correspondiente para la iteración, he investigado sobre ejemplos de plan de pruebas y ejemplos de arquitectura para proyectos de desarrollo de solamente backend
+
+
+Domingo 20 de diciembre
+------------------------------
+
+Se trabaja en los documentos, se habla con el cliente sobre datos relevantes del proyecto y de cómo le gustaría que se generarán los identificadores de la ruta. Además Diego como consejo y experiencia en diseño nos proporciona varios tips para mejorar la arquitectura.
+
+Queda pendiente desarrollar el api para la base de datos
+Queda pendiente desarrollo de un cli para manejar lo desarrollado
+
+
+Lunes 21 de diciembre
+------------------------------
+
+Según especificación del cliente quiere saber si los tramos pertenecen a una ruta específica, por lo tanto he investigado cómo dibujar una ruta en una biblioteca llamada leaflet.
+
+He desarrollado un script para leer las coordenadas de un archivo csv y traducirlo a una lista de strings para poder dibujar el trayecto. Los resultados son muy buenos.
+
+Queda pendiente buscar como crear el recorrido con las rutas.
+
+
+Martes 22 de diciembre
+------------------------------
+
+Trabajo arduo en las documentaciones, la mayoria de la documentacion ya esta lista.
+
+He terminado con la parte que me correspondía del plan de pruebas. 
+
+Voy a empezar con el desarrollo.
+
+Inició la investigación de como unir de la mejor forma las rutas.
+
+
+Miércoles 23 de diciembre
+------------------------------
+
+Trabaje todo el dia investigando cómo unir de la mejor manera las rutas proporcionadas, el problema es que las rutas tienen puntos que no coinciden y las rutas brindadas tampoco están en orden por lo tanto es difícil asegurar que la ruta se pueda unir con la secuencia de puntos de de forma que siga el trayecto.
+
+Hay varias aproximaciones que funcionan, pero muchos de los casos se escapan que da planeado para las próximas iteraciones mejorar este proceso.
+
+
+Jueves 24 de diciembre
+------------------------------
+
+Se trabajó para obtener la versión final del código para la primera iteración, se trabaja en la optimización de los módulos para tener una mejor respuesta ante el proceso general (rutas y paradas) Se investiga cómo lograr unir la ruta por sus puntos más cercanos a él.
