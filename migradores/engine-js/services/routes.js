@@ -111,6 +111,8 @@ var routes = {
     },
 
     getRouteIds: function() {
+        var x = undefined;
+        var y = x.hola;
         var query = 'SELECT distinct(value) AS route FROM (SELECT expand(routes) FROM BusStop) ORDER BY route ASC';
         return odb.query(query).then(function(results) {
             return _.map(results, function(result) {
