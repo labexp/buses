@@ -13,7 +13,7 @@ Implementación en `node.js` del API de backend para el servicio de datos abiert
 
 ```
 BUSES_ODB_ROOT_USR
-BUSES_ODB_ROOT_USR
+BUSES_ODB_ROOT_PWD
 ```
 
 * Descargar las dependencias
@@ -86,7 +86,7 @@ POST http://localhost:3000/buses/v0.1/route
 
 * Response
 
-```
+```json
 {
   "route": "421"
 }
@@ -102,7 +102,7 @@ GET http://localhost:3000/buses/v0.1/route/id/420
 
 * Response
 
-```
+```json
 {
   "id": "420",
   "stops": [
@@ -166,7 +166,7 @@ GET http://localhost:3000/buses/v0.1/route/ids
 
 * Response
 
-```
+```json
 [
   "400",
   "410",
