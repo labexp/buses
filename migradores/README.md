@@ -1,4 +1,4 @@
-# Migradores de datos abierto
+# Migradores de datos abiertos
 ## Componentes de software para consumir y exportar conjuntos de datos sobre rutas de transporte público en Costa Rica
 
 Este repositorio contiene componentes de software que permiten mover datos desde y hacia los repositorios de datos del proyecto de información de transporte público del Laboratorio Experimental TEC-SIUA.
@@ -18,3 +18,6 @@ El componente `buses-osm` exporta las rutas de transporte público almacenadas e
 
 La aplicación móvil `buses-vis` permite visualizar los recorridos de rutas de autobús almacenados en la base de datos de este proyecto.
 
+#### Elementos en común
+
+Los elementos en `buses-common` son entidades que sirven colaborativamente en los componentes productor, consumidor y visualizador.
