@@ -5,6 +5,7 @@ import ac.tec.buses.engine.model.Point
 import ac.tec.buses.engine.model.Travel
 import ac.tec.buses.engine.services.RoutesService
 import com.tinkerpop.blueprints.impls.orient.OrientGraphFactory
+import groovy.transform.CompileStatic
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 
@@ -27,6 +28,7 @@ import org.springframework.stereotype.Service
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 @Service
+@CompileStatic
 class OrientRoutesService implements RoutesService {
 
     @Autowired
@@ -39,19 +41,21 @@ class OrientRoutesService implements RoutesService {
             // TODO: duplicate prevention validations
             def persistedStops = [:]
             stops.each { stop ->
+                Map location = (Map) stop.location
+                Point locationPoint = new Point(latitude: (double) location.latitude, longitude: (double) location.longitude)
                 BusStop busStop = new BusStop(
-                        name: stop.name,
-                        location: new Point(latitude: stop.location.latitude, longitude: stop.location.longitude),
+                        name: (String) stop.name,
+                        location: locationPoint,
                         routes: [routeId]
                 )
-                persistedStops["${stop.location.latitude},${stop.location.longitude}"] = busStop
+                persistedStops["${location.latitude},${location.longitude}".toString()] = busStop
             }
 
             // TODO: duplicate prevention validations
             BusStop from = null, to = null
             List<Point> points = []
             path.each { point ->
-                BusStop stop = persistedStops["${point.latitude},${point.longitude}"] as BusStop
+                BusStop stop = persistedStops["${point.latitude},${point.longitude}".toString()] as BusStop
                 if (stop != null) {
                     if (from == null) {
                         from = stop
@@ -59,15 +63,65 @@ class OrientRoutesService implements RoutesService {
                     } else if (to == null) {
                         to = stop
                         Travel persistedTravel = from.addToConnectedStops(to)
+//                        persistedTravel.route = routeId
                         persistedTravel.path = points
                         from = to
                         to = null
                         points = []
                     }
                 } else {
-                    points << new Point(latitude: point.latitude, longitude: point.longitude)
+                    points << new Point(latitude: (double) point.latitude, longitude: (double) point.longitude)
                 }
             }
         }
+    }
+
+    @Override
+    def getById(String id) {
+        Map result = [id: id, stops: [], path: []]
+        return graphFactory.withTransaction {
+            BusStop firstStop = BusStop.graphQuery('SELECT FROM BusStop WHERE :routeId IN routes ORDER BY @rid LIMIT 1', [routeId: id])
+            traverse(firstStop, result, id)
+        }
+    }
+
+    def traverse(BusStop stop, Map result, String routeId) {
+        (result.stops as List) << toJson(stop)
+        (result.path as List) << toJson(stop.location)
+
+        def edges = stop.vertex.pipe().inE('Travel').filter { it.getProperty('route') == routeId }.toList(Travel.class)
+        if (edges != null && !edges.empty) {
+            Travel travel = edges[0]
+            travel.path.each { Point point ->
+                (result.path as List) << toJson(point)
+            }
+
+            traverse(travel.out, result, routeId)
+        }
+
+        return result
+    }
+
+    private Map toJson(BusStop stop) {
+        [
+                name: stop.name,
+                location: toJson(stop.location),
+                routes: stop.routes
+        ]
+    }
+
+    private Map toJson(Point point) {
+        [
+                latitude: point.latitude,
+                longitude: point.longitude
+        ]
+    }
+
+    private Map toJson(Travel travel) {
+        [
+                path: travel.path.collect { point ->
+                    toJson(point)
+                }
+        ]
     }
 }

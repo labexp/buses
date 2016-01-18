@@ -3,9 +3,7 @@ package ac.tec.buses.engine.model
 import com.github.eugene.kamenev.orient.graph.Edge
 import com.github.eugene.kamenev.orient.graph.Vertex
 import com.orientechnologies.orient.core.metadata.schema.OType
-import groovy.transform.Canonical
 import groovy.transform.CompileStatic
-import groovy.transform.EqualsAndHashCode
 
 /**
  *   buses engine
@@ -28,19 +26,13 @@ import groovy.transform.EqualsAndHashCode
 
 @Vertex
 @CompileStatic
-@EqualsAndHashCode
 class Point {
     double latitude
     double longitude
-
-    static mapping = {}
-
-    Map toJson() { [latitude: latitude, longitude: longitude] }
 }
 
 @Vertex
 @CompileStatic
-@Canonical
 class BusStop {
     String name
     Point location
@@ -51,23 +43,15 @@ class BusStop {
         location(type: OType.LINK)
         connectedStops(edge: Travel)
     }
-
-    Map toJson() { [
-            name: name,
-            location: location.toJson(),
-            routes: routes
-    ] }
 }
 
 @Edge(from = BusStop, to = BusStop)
-@Canonical
 @CompileStatic
 class Travel {
+//    String route
     List<Point> path = []
 
     static mapping = {
         path(type: OType.LINKLIST)
     }
-
-    Map toJson() { [path: path*.toJson()] }
 }

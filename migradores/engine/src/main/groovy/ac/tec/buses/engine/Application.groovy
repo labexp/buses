@@ -1,5 +1,7 @@
 package ac.tec.buses.engine
 
+import com.tinkerpop.blueprints.impls.orient.OrientGraphFactory
+import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.SpringApplication
 import org.springframework.boot.autoconfigure.SpringBootApplication
 
@@ -23,8 +25,11 @@ import org.springframework.boot.autoconfigure.SpringBootApplication
  */
 @SpringBootApplication
 class Application {
+
+    @Autowired
+    OrientGraphFactory graphFactory
+
     public static void main(String[] args) throws Exception {
         SpringApplication.run(Application.class, args);
     }
-
 }
