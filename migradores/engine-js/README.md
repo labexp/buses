@@ -13,7 +13,7 @@ Implementación en `node.js` del API de backend para el servicio de datos abiert
 
 ```
 BUSES_ODB_ROOT_USR
-BUSES_ODB_ROOT_USR
+BUSES_ODB_ROOT_PWD
 ```
 
 * Descargar las dependencias
