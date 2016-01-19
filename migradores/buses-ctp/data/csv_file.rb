@@ -64,6 +64,10 @@ class CsvFile < DataSource
       stops = gen_stops
       path = @route_gen.insert_stops_in_path(path, stops)
 
+      #Insert start and end point as stops
+      stops.insert(0,Stop.new("Punto inicial de la ruta",path.first))
+      stops.append(Stop.new("Punto final de la ruta",path.last))
+
       route = Route.new(id, path, stops)
       route
     end

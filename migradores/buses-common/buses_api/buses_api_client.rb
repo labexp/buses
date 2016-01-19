@@ -9,7 +9,7 @@ module BusesApi
     # Provide basic HTTP client behaviour.
     include HTTParty
 
-    base_uri "http://localhost:8080"
+    base_uri "http://localhost:3000"
 
     API_VERSION = "v0.1".freeze
 
@@ -26,6 +26,10 @@ module BusesApi
       find_route(id)
     end
 
+    def get_routes
+      get_id_list
+    end
+
     private
     def create(route)
       post(route.class.to_s.downcase, body:JSON.generate(route.to_json))
@@ -35,8 +39,12 @@ module BusesApi
       get("route/#{id}")
     end
 
+    def get_id_list
+      get("route/ids")
+    end
+
     def api_url(url)
-      "/buses/#{API_VERSION}/" + url
+      "/buses/#{API_VERSION}/" + URI.escape(url)
     end
 
     def put(url)
@@ -47,8 +55,8 @@ module BusesApi
       do_request(:post, url, options)
     end
 
-    def get(url, options = {})
-      do_request(:get,url,options)
+    def get(url)
+      do_request(:get,url)
     end
 
     def do_request(method, url, options = {})
@@ -79,3 +87,4 @@ module BusesApi
   end
 
 end
+
