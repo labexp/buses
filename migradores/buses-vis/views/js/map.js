@@ -32,7 +32,13 @@ var ready = function() {
 	var route = localStorage.getItem('routeInfo');
 	var routeJson = JSON.parse(route);
 	drawRoute(routeJson.path,'red');
-	$("#route-name").html("Ruta "+routeJson.id);
+
+	var start = localStorage.getItem('start');
+	var end = localStorage.getItem('end');
+	var details = localStorage.getItem('details');
+	$("#route-name").html(start+" - "+end);
+	$("#route-desc").html(details);
+	
 };
 
 $(document).on('page:load', ready);

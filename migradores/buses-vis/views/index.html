@@ -7,43 +7,30 @@
     <link rel="stylesheet" href="css/main.css">
     <link rel="stylesheet" href="css/index.css">
     <link rel="stylesheet" href="css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.10/css/jquery.dataTables.min.css">
-    
-    <script type="text/javascript" src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
-    <script type="text/javascript" src="https://cdn.datatables.net/1.10.10/js/jquery.dataTables.min.js"></script>
-
+    <link rel="stylesheet" href="css/jquery.dataTables.min.css">
 </head>
 <body>
-    <section class="header">
-        <img src="img/Logo1.png" alt="Logo de la aplicación" class="logo-img">
-    </section>
 
-    <!--
-	<div class="form-group has-feedback myform">
-        <input type="text" class="form-control" id="search-txt" placeholder="Nombre del lugar"/>
-        <span class="glyphicon glyphicon-search form-control-feedback"></span>
+	<div class="wrap">
+		<div class="main">
+		    <section class="header row">
+		        <img src="img/Logo1.png" alt="Logo de la aplicación" class="logo-img">
+		        <h3 class="title">Route viewer - Data Migrators</h3>
+		    </section>
+
+		    <section id="main-container" class="row">
+		        <table id="routes-table" class="table table-hover">
+		        </table>
+		    </section>
+	    </div>
     </div>
-    -->
-
-    <section id="main-container">
-        <table id="routes-table" class="table table-hover">
-            <thead>
-                <tr>
-                    <th>ID</th>
-                </tr>
-            </thead>
-            <tbody>
-
-            </tbody>
-        </table>
-    </section>
-
     
     <section class="footer">
 		ITCR project
     </section>
 
-
+    <script type="text/javascript" src="js/jquery-1.11.3.min.js"></script>
+    <script type="text/javascript" src="js/jquery.dataTables.min.js"></script>
     <script src="js/main.js"></script>
  
 
