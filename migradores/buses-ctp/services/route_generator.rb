@@ -1,3 +1,4 @@
+require 'haversine'
 require_relative '../../buses-common/services/logging'
 require_relative '../../buses-common/models/point'
 
@@ -12,9 +13,8 @@ class RouteGenerator
     index = [0, 1, 5,7,11,13] # positions for key words.
     if @info_list.length >= 23
       index << 23
-    else
-      index << 14
     end
+    
 
     index.each do |i|
       if not arr_id.include? @info_list[i]
@@ -212,7 +212,7 @@ class RouteGenerator
       x2 = point2.lat
       y1 = point1.lon
       y2 = point2.lon
-      Math.sqrt(((x2-x1)**2)+((y2-y1)**2))
+      Haversine.distance(x1,y1,x2,y2).to_m
     end
 
 end

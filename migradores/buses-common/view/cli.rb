@@ -29,20 +29,18 @@ class Cli
         end
       when 'export'
         if tokens[1].nil?
-          print_error 'Usage: export [-s base_uri] [-f] <route(s)>'
+          print_error 'Usage: export [-s base_uri] [-f file] [--all] <route(s)>'
+          return
         end
 
         if tokens[1] == '-s' and !tokens[2].nil?
           puts "Rosemary Base URI changed to #{tokens[2]}"
           @rosemary_uri = tokens[2]
-          if tokens[3] == '-f' && tokens[4]!=nil
-            export(tokens[4])
-          else
-            export_route(tokens[1..-1]) unless tokens[1].nil?
-          end
         else
           if tokens[1] == '-f' && tokens[2]!=nil
-            export(tokens[2])
+            export_file(tokens[2])
+          elsif tokens[1] == '--all'
+            export_all
           else
             export_route(tokens[1..-1]) unless tokens[1].nil?
           end
@@ -64,7 +62,7 @@ class Cli
         while ((route = csv_file.get_next_route)!=nil)
           if route.id != "" && route.path != []
             response = busesapi.save(route)
-            if response['status'] == 200
+            if !response.nil?
               puts "Route #{route.id} created succesfully."
             else
               print "Error adding route #{route.id}. "
@@ -82,67 +80,38 @@ class Cli
       end
     end
 
-    # Temporary method to simulate received JSON.
-    def get_route
-      {
-      "id": "400",
-          "stops": [
-          {
-              "name": "La parada por el palo",
-              "location": {
-                  "latitude": 9.894389,
-                  "longitude": -81.38932
-              }
-          },
-          {
-              "name": "El rancho de la esquina",
-              "location": {
-                  "latitude": 9.43843,
-                  "longitude": -84.43784
-              }
-          }
-        ],
-          "path": [
-          {
-              "latitude": 9.894389,
-              "longitude": -81.38932
-          },
-          {
-              "latitude": 9.32832,
-              "longitude": -81.38232
-          },
-          {
-              "latitude": 10.4384,
-              "longitude": -84.438943
-          },
-          {
-              "latitude": 9.43843,
-              "longitude": -84.43784
-          }
-      ]
-      }
-    end
-
-    def export(source)
+    def export_file(source)
       File.readlines(source).each do |id|
         export_route(id)
       end
     end
 
+    def export(route)
+      route = JSON.parse(route.to_json)
+      osmapi = OSMBusesApi.new
+      osmapi.change_base_uri @rosemary_uri
+      m_route = RouteParser.new.parse(route)
+      changeset = osmapi.post_route(m_route,"Creating test with route id #{m_route.id}")
+      puts "Route #{m_route.id} sucessfully added to OSM with changeset #{changeset}"
+    end
+
     def export_route(id)
       id = id.join(' ')
       busesapi = BusesApi::Api.new
-      route = get_route #busesapi.get_route(id)
+      route = busesapi.get_route(id)
       if route.nil?
         puts "Route #{m_route.id} does not exist on database."
       else
-        route = JSON.parse(route.to_json)
-        osmapi = OSMBusesApi.new
-        m_route = RouteParser.new.parse(route)
-        changeset = osmapi.post_route(m_route,"Creating test with route id #{m_route.id}")
-        puts "Route #{m_route.id} sucessfully added to OSM with changeset #{changeset}"
+        export route
       end
+    end
 
+    def export_all
+      busesapi = BusesApi::Api.new
+      id_list = busesapi.get_routes
+      id_list.each do |route_id|
+        export(busesapi.get_route route_id)
+      end
     end
 
     def help
@@ -151,7 +120,7 @@ class Cli
       puts 'import: import data from file or api source'
       puts '  Usage: import <-f,-a> <ways> <stops>'
       puts 'export:'
-      puts '  Usage: export [-s source] <route_id>'
+      puts '  Usage: export [-s source] [-f file] [--all] <route_id>'
       puts 'help'
       puts '  Usage: help'
       puts 'exit'
