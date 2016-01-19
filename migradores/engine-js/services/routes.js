@@ -89,9 +89,10 @@ var routes = {
             var stops = [];
             var path = [];
 
-            var _traverse = function(stop) {
+            var _traverse = function(stop, visited) {
                 stops.push(stop);
                 path.push(stop.location);
+                visited.push(stop);
 
                 var travel = stop.out_Travel && stop.out_Travel.all()[0];
                 if (!_.isEmpty(travel)) {
@@ -99,12 +100,15 @@ var routes = {
                         path.push(point);
                     });
 
-                    _traverse(travel.in)
+                    var to = travel.in;
+                    if (!_.includes(visited, to)) {
+                        _traverse(to)
+                    }
                 }
             };
 
             if (!_.isEmpty(start)) {
-                _traverse(start);
+                _traverse(start, []);
             }
 
             return {
