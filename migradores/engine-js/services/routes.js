@@ -81,10 +81,11 @@ var routes = {
                 } else {
                     return resultPrev
                 }
+            }, { notfound: true, createdOn: moment().add(1,'day').toDate() });
 
-
-                //return result['@class'] === 'BusStop' && _.isEmpty(result.in_Travel)
-            }, {createdOn: moment().add(1,'day').toDate()});
+            if (start.notfound === true) {
+                return undefined
+            }
 
             var stops = [];
             var path = [];

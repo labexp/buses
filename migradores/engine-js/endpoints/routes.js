@@ -35,12 +35,18 @@ var routes = {
 
         if (_.isEmpty(routeId)) {
             var err = new Error('Missing required path parameter id');
-            err.sttus = 400;
+            err.status = 400;
             return next(err)
         }
 
         return services.routes.getById(routeId).then(function(result) {
-            return res.status(200).json(utils.detachOdbRecord(result))
+            if (result === undefined) {
+                var err = new Error('Resource not found: ' + routeId);
+                err.status = 404;
+                return next(err);
+            } else {
+                return res.status(200).json(utils.detachOdbRecord(result))
+            }
         }).catch(function (err) {
             return next(err)
         })
