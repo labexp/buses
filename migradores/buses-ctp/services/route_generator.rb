@@ -14,7 +14,7 @@ class RouteGenerator
     if @info_list.length >= 23
       index << 23
     end
-    
+
 
     index.each do |i|
       if not arr_id.include? @info_list[i]

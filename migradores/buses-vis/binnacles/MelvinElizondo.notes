@@ -1,0 +1,78 @@
+===========================================================
+| Bitácora de trabajo individual		       	  |
+| Proyecto: “Datos abiertos: componentes de software 	  |
+|  	para consumir y exportar conjuntos de datos sobre |
+| 	rutas de transporte público en Costa Rica”     	  |
+| Melvin Elizondo Pérez					  |
+| Instituto Tecnológico de Costa Rica 			  |
+===========================================================
+
+
+Martes 12 de diciembre
+------------------------------
+
+Estuve realizando una lluvia de ideas de las secciones para realizar el paper. Busqué algunas referencias de paper hechos anteriormente sobre OpenStreetMap.
+
+Lei las presentaciones sobre cómo redactar artículos subidas al Tec-Digital por la profesora María, y hice anotaciones en el documento para seguir algunos puntos importantes.
+
+
+Miércoles 13 de diciembre
+------------------------------
+
+Estuve desarrollando las partes del paper.
+
+
+Jueves 14 de diciembre
+------------------------------
+
+Investigué cómo realizar el empaquetamiento de una aplicación web para convertirla en móvil mediante el uso de Adobe Phonegap. Realicé varias pruebas con una sección de la interfaz gráfica de la tercer iteración sin embargo estaba teniendo problemas con los recursos externos que provienen de internet. Mi primer intento por solucionar esto fue solicitar al usuario el permiso de acceso a internet, pero el problema persistía. Estuve leyendo varias fuentes en internet donde encontré que en el archivo config.xml (donde se detallan aspectos de configuración para la aplicación) se debía detallar a cuáles sitios web se permitía el acceso. Además de esto debía incluir algunos plugin de Apache Cordova para el funcionamiento de esta parte. Trás agregar el archivo config.xml con la información mencionada fue posible presentar una imagen de una url externa, y los mapas de OpenStreetMap presentaron su contenido. 
+
+Seguidamente desarrollé un servidor web sencillo para servir como punto de contacto entre la base de datos y la aplicación web/móvil. Este haría uso de la herramienta previamente desarrollada “BusesApi” para extraer la información de las rutas que se desean presentar y trazar en el mapa. En el transcurso del proceso tuve algunos problemas por un error presentado: 
+
+No 'Access-Control-Allow-Origin' header is present on the requested resource. Origin 'null' is therefore not allowed access.
+
+
+La solucion fue agregar dos lineas al codigo del servidor web Webrick:
+    response.headers['Access-Control-Allow-Origin'] = '*'
+    response.headers['Access-Control-Request-Method'] = '*'
+
+Luego de esto me puse a trabajar en el ERS, revisando los puntos y creando un solo documento con lo realizado en las iteraciones anteriores. 
+
+Me queda pendiente realizar los diagramas correspondientes al visualizador.
+
+NOTA: busqué algunos ejemplo de Manual Técnico para tener presente las partes que debe poseer.
+
+
+Viernes 15 de diciembre
+------------------------------
+
+Hice los diagramas de secuencia y actividad que me correspondían según la lista de requerimientos de la iteración.
+
+Trabaje en el plan de pruebas uniendo la documentación de las iteraciones pasadas y agregando lo correspondiente a esta iteración. Puse comentarios a Daniel para que agregará las partes correspondientes a su parte de la iteración 2.
+
+Luego inicié con el SAD describiendo la arquitectura completa del sistema, en algunos casos distinguiendo entre los 3 componentes para ser más claro. Hice algunos diagramas de los paquetes y los procesos de cada componente.
+
+
+Domingo 17 de diciembre
+------------------------------
+
+Me encargue de revisar y finalizar de manera correcta los documentos de ERS, SAD y Plan de pruebas. Correcciones en redacción y en diagramas.
+
+
+Lunes 18 de diciembre
+------------------------------
+
+Estuve trabajando en los distintos requerimientos para la interfaz como lo eran el mostrado del mapa y dibujado de ruta, el filtrado de las rutas de la tabla y la paginación de las mismas. Además estuve haciendo pruebas con PhoneGap para empaquetar de manera correcta la aplicación con los permisos requeridos y la configuración correspondiente. 
+
+Dejé únicamente las líneas de configuración necesarias, eliminando todos los permisos que teníamos en el config.xml inicial a modo de prueba. El unico permiso necesario para el funcionamiento del app es acceso a internet que es predeterminado en las aplicaciones PhoneGap. Elimine plugins que no eran necesarios y trabaje en los estilos para su correcto despliegue en dispositivos móviles (especialmente tablet como fue pedido por el cliente).
+
+
+Martes 19 de diciembre
+------------------------------
+
+Nos reunimos con Diego para consultar algunos detalles del engine que no estaban funcionando por la forma de implementación. Logramos corregir esto cambiando algunas cosas de la lógica de extracción de datos del engine.
+
+El problema se presentaba por el modelo de datos del proyecto en OrientDB y la forma de las rutas (que empezaban y terminaban en el mismo lugar, en su mayoría). 
+
+Realicé las pruebas de los componentes que se habían definido en el plan de pruebas. Las vistas HTML utilizando Selenium
+

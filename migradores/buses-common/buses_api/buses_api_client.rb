@@ -36,7 +36,7 @@ module BusesApi
     end
 
     def find_route(id)
-      get("route/#{id}")
+      get("route/id/#{id}")
     end
 
     def get_id_list
@@ -61,6 +61,7 @@ module BusesApi
 
     def do_request(method, url, options = {})
       begin
+        #puts JSON.pretty_generate(JSON.parse(options[:body]))
         response = self.class.send(method, api_url(url), options.merge(:headers => { 'Content-Type' => 'application/json' }))
         check_response_codes(response)
         response.parsed_response
@@ -70,21 +71,33 @@ module BusesApi
     end
 
     def check_response_codes(response)
-      body = response['message']
-      case response.code.to_i
+      code = response.response.code if response.code.nil?
+      body = response.response.message if response.message.nil?
+      code ||= response.code
+      body ||= response.message
+      case code.to_i
         when 200 then return
         when 400 then raise BadRequest.new(body)
         when 401 then raise Unauthorized.new(body)
         when 403 then raise Forbidden.new(body)
         when 404 then raise NotFound.new(body)
         when 405 then raise MethodNotAllowed.new(body)
-        when 500 then raise ServerError, "Internal Server Error #{response['message']}"
+        when 500 then raise ServerError, "Internal Server Error #{body}"
         when 503 then raise Unavailable, 'Service Unavailable'
         else raise "Unknown response code: #{response.code}"
       end
     end
-
   end
-
 end
 
+=begin
+api = BusesApi::Api.new
+routes = api.get_routes
+
+p routes
+
+routes.each do |route|
+  p route
+  r = api.get_route route
+  puts JSON.pretty_generate(r)
+=end

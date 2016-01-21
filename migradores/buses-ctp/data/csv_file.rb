@@ -66,7 +66,7 @@ class CsvFile < DataSource
 
       #Insert start and end point as stops
       stops.insert(0,Stop.new("Punto inicial de la ruta",path.first))
-      stops.append(Stop.new("Punto final de la ruta",path.last))
+      #stops.append(Stop.new("Punto final de la ruta",path.last))
 
       route = Route.new(id, path, stops)
       route

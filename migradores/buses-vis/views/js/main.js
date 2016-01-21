@@ -1,4 +1,7 @@
 
+var serverIp = "10.10.0.100";
+var serverPort = "1234";
+
 function splitId(route){
 	var details, dates;
  	var idx = route.search("Ruta");
@@ -43,7 +46,7 @@ var ready = function() {
 
 	$.ajax({
 	    method: "get",
-	    url: 'http://10.10.0.100:1234/routes',
+	    url: 'http://'+serverIp+':'+serverPort+'/routes',
 	}).success(function (response) {
 		showRoutes(response);
 	}).fail(function (response) {
@@ -56,7 +59,7 @@ var ready = function() {
     	var arr = splitId(ide);
 		$.ajax({
 		    method: "get",
-		    url: 'http://10.10.0.100:1234/routes',
+		    url: 'http://'+serverIp+':'+serverPort+'/routes',
 		    data: {id: ide}
 		}).success(function (response) {
 			localStorage.setItem('start', arr[0]);

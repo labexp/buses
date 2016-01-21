@@ -1,0 +1,201 @@
+===========================================================
+| Bitácora de trabajo individual		       	            |
+| Proyecto: “Datos abiertos: componentes de software 	    |
+|  	para consumir y exportar conjuntos de datos sobre       |
+| 	rutas de transporte público en Costa Rica”     	        |
+| Daniel Solís Méndez					                    |
+| Instituto Tecnológico de Costa Rica 			            |
+===========================================================
+
+__________________________________________________________________
+
+Martes 12 de Enero
+
+__________________________________________________________________
+
+Lluvia de ideas para el paper
+Llegamos a la conclusion de que lo mas sencillo para trabajar es sobre los procesos realizados con la manupulacion de las rutas
+Tanto para el proyecyo como para OSM
+
+Hice el abstract y la introduccion del paper
+ Hable un poco de los que se trababa el paper y el proceso de la generacion de las rutas
+
+__________________________________________________________________
+
+Miercoles 13 de Enero
+
+__________________________________________________________________
+
+Trabaje en el paper
+Tuve que hacer varias pruebas y visualizaciones de las rutas para poner informacion en el paper
+Cree la estructura inicial de los contenidos del paper
+
+Tuvimos que enviar el paper.
+
+__________________________________________________________________
+
+Jueves 14 de Enero
+
+__________________________________________________________________
+
+
+Estuvimos trabajando con el servidor web, tuvimos varios problemas con el servidor http
+
+habia un error debido que ajax maneja headers para las consultas que realiza y las respuestas que recibe
+para solucionar el error se deben agregar las siguientes lineas a la respuesta.
+
+    response.header['Access-Control-Allow-Origin']   = '*'
+    response.header['Access-Control-Request-Method'] = '*'
+
+Despues de soucionar el error hicimos varias pruebas con objetos Dummy para visualizar la ruta y la respuesta del servidor
+
+
+__________________________________________________________________
+
+Viernes 15 de Enero
+
+__________________________________________________________________
+
+Estuve trabajando en el ERS, tuvimos que generar varios diagramas
+
+Trabaje y revisé el ERS para ver si hacia falta agregar descripciones para el visualizador
+
+
+__________________________________________________________________
+
+Sábado 16 de Enero
+
+__________________________________________________________________
+
+
+Finalizacion de los diagramas para ERS
+
+Trabaje en la creacion de nuevos diagramas para el SAD
+
+Hice diagramas de red y diagramas de implementacion y visualizacion
+
+Ademas agregué informacion relevante en el documento y varias descripciones para las diferentes partes del documento
+
+Agregué las partes correspondientes a la iteracion 2 que eran individuales para el plan de pruebas.
+
+
+__________________________________________________________________
+
+Domingo 17 de Enero
+
+__________________________________________________________________
+
+El cliente cominca que ya esta listo el engine
+
+
+Trabaje haciendo pruebas y mmontando el ambiente necesario para ejecutar el engine
+
+Tuve que modificar codigo del engine para garantizar que la base de datos tuviera el usuario y la contraseña funcione.
+
+Al parecer el engine no funciona correctamente.
+
+Hice la notificacion al cliente, algo en la cosulta hace que el resultado del engine no retorne la informacion de la ruta.
+
+No sabemos si es error de nosotros o del engine
+
+La integridad del JSON generado se encuentra bien
+
+{
+  "id": "San Francisco - Desamparados Ruta San Jose - Barrio Lourdes de Aserri Ruta 70 (empresa AUTOTTES. DESAMPARADOS SA) Subsector Desamparados",
+  "path": [
+    {
+      "latitude": 9.851203,
+      "longitude": -84.100772
+    },
+    {
+      "latitude": 9.85127,
+      "longitude": -84.100738
+    },
+    {
+      "latitude": 9.851378,
+      "longitude": -84.100647
+    },
+    {...},
+    {
+      "latitude": 9.851203,
+      "longitude": -84.100772
+    }
+  ],
+  "stops": [
+    {
+      "name": "Punto inicial de la ruta",
+      "location": {
+        "latitude": 9.851203,
+        "longitude": -84.100772
+      }
+    }
+  ]
+}
+
+El cliente nos informa que el engine funciona con las paradas y debe
+contener elementos siempre en las paradas y en el recorrido ademas que el punto inicial de la ruta
+siempre debe estar contenido como una parada en la lista de stops
+
+Punto importante para hacer el cambio en el codigo
+
+Hice cambios en el cofigo pero sigue sin funcionar
+
+Hice mas pruebas para saber que esta pasando con la ruta
+
+El engine siguie sin funcionar
+
+__________________________________________________________________
+
+Lunes 18 de Enero
+
+__________________________________________________________________
+
+Hablamos con el cliente via chat, ya que el engine siguie sin funcionar y necesitamos entregar el proyecto
+y generar la aplicacion junto con otros entregables para el proyecto.
+
+Le dimos explcaciones al cliente, además aclaramos que los procesos se estaban realizando según lo estipulado, y la informacion del json
+estaba llegando correctamente al serivor
+
+El cliente quedo en revisarlo y proporcionar mas informacion.
+
+
+
+Complete parte de desarrollo en el codigo para la consula y el api.
+
+__________________________________________________________________
+
+Martes 19 de Enero
+
+__________________________________________________________________
+
+Tuvimos una reunion presencial con Diego
+
+Mostramos el visualizador y le solicitamos que revisaramos el engine
+
+Diego nos explica que la identificación de los stops esta hecho en un mapa donde la llave son sus coordenasas
+por lo tanto si el punto de la ruta inicial coincide con el punto final como un stop el recorrido se marca como un punto que entra y sale del mismo punto
+por lo que la unica forma de identificar el inicio o el final es un punto que tenga una salida o otra punto sin nada que entre
+y de igual manera para el ultimo punto, seria algo que le entre pero que no le salga a ningun otro punto.
+
+Por lo tanto eso genera el error de que los puntos no se estan retornando correctamente
+
+
+Trabajamos en el codigo del engine con Diego, la solucion fue encontrar el primer stop que identifique el id, con la fecha más antigua
+Y realizar el recorrido por los puntos de la ruta
+
+
+Diego acepta el visualizador y quedamos listos para firmar papeles nada más
+
+Trabaje en la integracion del engine ya corregido para que todo quedara funcionando como debia
+
+
+------
+Actualizacion
+
+Hice cambios para retroalimentar el proceso de exportacion
+
+Además la cli incluye nuevos metodos para exportar las rutas
+
+Acoplé el código ya esta listo para presentarse y correr
+
+Todo queda funcionando

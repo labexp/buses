@@ -37,6 +37,7 @@ class OSMBusesApi
     relation = add_stops(relation, route.stops) # Add bus stops to relation
 
     @api.save(relation, @changeset) # Save relation using the API
+    puts 'Relation created succesfuly.'
     @api.close_changeset(@changeset)
     @changeset.id
   end
@@ -44,17 +45,20 @@ class OSMBusesApi
   private
     # Creates a node list based on the path of the route
     def create_node_list(path)
+      puts 'Creating nodes, this may take several time...'
       node_list = []
       path.each do |point|
         node = Rosemary::Node.new(lat: point.lat, lon: point.lon)
         node_id = @api.save(node, @changeset)
         node_list << node_id
       end
+      puts "There was #{node_list.length} nodes created successfully"
       node_list
     end
 
     # Creates a way given the list of member nodes
     def create_way(nodes_list)
+      puts 'Creating Way...'
       way = Rosemary::Way.new
       nodes_list.each do |id|
         way << Rosemary::Node.new(id: id)
@@ -65,6 +69,7 @@ class OSMBusesApi
 
     # Creates the relation and links the ways to that relation.
     def create_relation(ways_list)
+      puts 'Creating relation...'
       relation = Rosemary::Relation.new(visible: 'true')
       ways_list.each do |way_id|
         relation.members << Rosemary::Member.new('way', way_id)
@@ -75,6 +80,7 @@ class OSMBusesApi
 
     # Adds the list of stops as members of the relation
     def add_stops(relation, stops_list)
+      puts 'Creating stops...'
       stops_id = []
       stops_list.each do |stop|
         point = stop.location
@@ -86,6 +92,7 @@ class OSMBusesApi
       stops_id.each do |id|
         relation.members << Rosemary::Member.new('node', id)
       end
+      puts "There was #{stops_id.length} stops added to relation."
       relation
     end
 
