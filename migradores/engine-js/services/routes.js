@@ -103,7 +103,7 @@ var routes = {
 
                     var to = travel.in;
                     if (!_.includes(visited, to)) {
-                        _traverse(to)
+                        _traverse(to, visited)
                     }
                 }
             };
