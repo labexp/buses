@@ -100,7 +100,7 @@ class Cli
     def export_route(id)
       id = id.join(' ')
       busesapi = BusesApi::Api.new
-      puts 'Trting to reach route from database...'
+      puts 'Trying to reach route from database...'
       route = busesapi.get_route(id)
       if route.nil?
         puts "Route #{m_route.id} does not exist on database."

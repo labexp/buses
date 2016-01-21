@@ -9,7 +9,7 @@ class OSMBusesApi
   def initialize
     # TODO: Change to production base_uri.
     Rosemary::Api.base_uri 'api06.dev.openstreetmap.org'
-    Rosemary::Api.default_timeout 20
+    Rosemary::Api.default_timeout 30
     auth_client = Rosemary::BasicAuthClient.new(ENV["OSM_USR"], ENV["OSM_PWD"])
     @api = Rosemary::Api.new(auth_client)
     @changeset = nil
@@ -46,12 +46,18 @@ class OSMBusesApi
     # Creates a node list based on the path of the route
     def create_node_list(path)
       puts 'Creating nodes, this may take several time...'
+      print 'Processing ['
+      ratio = (path.length/20).to_i
+      count = 0
       node_list = []
       path.each do |point|
         node = Rosemary::Node.new(lat: point.lat, lon: point.lon)
         node_id = @api.save(node, @changeset)
         node_list << node_id
+        count+=1
+        print '=' if count%ratio == 0
       end
+      puts ']'
       puts "There was #{node_list.length} nodes created successfully"
       node_list
     end
