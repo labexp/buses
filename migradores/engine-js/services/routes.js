@@ -1,6 +1,7 @@
 'use strict';
 
 var _ = require('lodash');
+var moment = require('moment');
 var promise = require('promise');
 
 var odb = require('../data/odb');
@@ -74,9 +75,16 @@ var routes = {
     getById: function(routeId) {
         var query = "SELECT FROM (TRAVERSE out(), outE('Travel') FROM (SELECT FROM BusStop WHERE :routeId IN routes)) WHERE route = :routeId OR :routeId IN routes";
         return odb.query(query, {params: {routeId: routeId}}).then(function(results) {
-            var start = _.find(results, function(result) {
-                return result['@class'] === 'BusStop' && _.isEmpty(result.in_Travel)
-            });
+            var start = _.reduce(results, function(resultPrev, resultCurr) {
+                if (resultCurr['@class'] === 'BusStop') {
+                    return resultPrev.createdOn > resultCurr.createdOn ? resultCurr : resultPrev;
+                } else {
+                    return resultPrev
+                }
+
+
+                //return result['@class'] === 'BusStop' && _.isEmpty(result.in_Travel)
+            }, {createdOn: moment().add(1,'day').toDate()});
 
             var stops = [];
             var path = [];
