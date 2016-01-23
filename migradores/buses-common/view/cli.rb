@@ -87,10 +87,12 @@ class Cli
     end
 
     def export(route)
+      puts 'Translating route...'
       route = JSON.parse(route.to_json)
       osmapi = OSMBusesApi.new
       osmapi.change_base_uri @rosemary_uri
       m_route = RouteParser.new.parse(route)
+      #logger.info "Route #{route.id.to_s} parsed succesfully, exporting to OSM in process"
       changeset = osmapi.post_route(m_route,"Creating test with route id #{m_route.id}")
       puts "Route #{m_route.id} sucessfully added to OSM with changeset #{changeset}"
     end
@@ -98,10 +100,12 @@ class Cli
     def export_route(id)
       id = id.join(' ')
       busesapi = BusesApi::Api.new
+      puts 'Trting to reach route from database...'
       route = busesapi.get_route(id)
       if route.nil?
         puts "Route #{m_route.id} does not exist on database."
       else
+        puts 'Route founded, exporting to OSM...'
         export route
       end
     end
