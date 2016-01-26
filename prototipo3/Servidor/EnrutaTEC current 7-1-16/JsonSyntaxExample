@@ -1,0 +1,44 @@
+Posts: http://localhost:8080/roadmap/batch
+
+{
+    "stops": [
+        {
+            "name": "Parada1"
+        },
+        {
+            "name": "Parada2"
+        },
+        {
+            "name": "Parada3"
+        },
+        {
+            "name": "Parada4"
+        }
+    ],
+
+    "routes": [
+        {
+            "from": "Parada1",
+            "to": "Parada2",
+            "name": "Ruta 3",
+            "distanceKms": 12
+        },
+        {
+            "from": "Parada2",
+            "to": "Parada3",
+            "name": "Ruta 1",
+            "distanceKms": 20
+        },
+        {
+            "from": "Parada3",
+            "to": "Parada4",
+            "name": "Ruta 3",
+            "distanceKms": 13
+        }
+    ]
+}
+
+GETS:
+
+http://localhost:8080/roadmap/stop
+http://localhost:8080/roadmap/route
