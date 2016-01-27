@@ -1,24 +1,41 @@
-# Ejemplo 4 - Spring Boot + REST + OrientDB
+# Configuración del servidor
 
-## Configuración
+# Requerimientos
+-intellij Idea 15.0 build 143.381
 
-Crear la base de datos en OrientDB. La manera más sencilla es utilizando la consola gráfica en http://localhost:2480.
+-jre 1.7.0
 
-Definir la configuración en variables de ambiente, ejemplo:
+-jvm: openjdk 64 bit server VM
 
-```bash
-export EJ4_ORIENT_URL="remote:localhost/roadmaps"
-export EJ4_ORIENT_USR="roadmaps"
-export EJ4_ORIENT_PWD="r04dm4p5"
-```
+-orientdb-community 2.1.5
 
-Nota: se recomienda el uso de direnv (https://github.com/direnv/direnv) para manejar variables de ambiente.
+-Gradle 2.6
 
-## Compilar y ejecutar
+## Ejecución
+Crear la base de datos en OrientDB. Se recomienda usar la versión gráfica en
+http://localhost:2480.
 
-```bash
-gradle clean build && java -jar build/libs/ejemplo4-0.0.1.jar
-```
+La base de datos se puede llamar como se desee, en este caso se llama proyecto
+
+El password y usuario se eligen al crear la base
+
+Es autowired, por lo cual no se deben crear tablas dentro de la base nueva, el programa las creara automaticamente
+
+Definir la configuración en variables de ambiente en intellij esto es a base de la información de la base de datos:
+![idea](https://cloud.githubusercontent.com/assets/1479846/12601375/30f11264-c466-11e5-8506-f077dee26c94.jpg)
+
+![idea2](https://cloud.githubusercontent.com/assets/1479846/12601417/7dac2792-c466-11e5-821f-2aff30228292.jpg)
+
+
+![idea3](https://cloud.githubusercontent.com/assets/1479846/12601442/ada44222-c466-11e5-9d69-b1a9d06704ed.jpg)
+
+-Correr el proyecto de intellij con el botón de run.
+
+-En caso de que de errores por el autowiring, ir a consola y correr el gradle manualmente. Esto se logra llendo al folder root del proyecto y escribiendo
+
+$> gradle clean
+$> gradle build
+
 
 ## Insertar en batch
 
@@ -26,63 +43,37 @@ Con `postman` o `curl` enviar un `POST` a `http://localhost:8080/roadmap/batch` 
 
 ```json
 {
-    "cities": [
+    "stops": [
         {
-            "name": "San José"
+            "name": "12",
+            "latitude": 121.34,
+            "longitude": 2341.23,
+            "price": 200,
+            "routes":["ruta1", "ruta2"]
+            
         },
         {
-            "name": "Heredia"
-        },
-        {
-            "name": "Alajuela"
+            "name": "13",
+            "latitude": 124.34,
+            "longitude": 2355.23,
+            "price": 200,
+            "routes":["ruta1", "ruta3"]
         }
     ],
 
-    "roads": [
+    "routes": [
         {
-            "from": "San José",
-            "to": "Heredia",
-            "name": "Ruta 3",
-            "distanceKms": 12
-        },
-        {
-            "from": "San José",
-            "to": "Alajuela",
-            "name": "Ruta 1",
-            "distanceKms": 20
-        },
-        {
-            "from": "Heredia",
-            "to": "Alajuela",
-            "name": "Ruta 3",
-            "distanceKms": 13
+            "from": "12",
+            "to": "13",
+            "distance": 100,
+            "coordinate": [234.45,564.34]
         }
+      
     ]
 }
+
+
+Si todo es correcto, Postman deberia retornar un estado 200 OK <br />
+ y en la direccion http://localhost:2480 deberia verse las <br />
+ tablas "routes" y "stops" creada con la informacion ingresada <br />
 ```
-
-## Consultas
-
-```
-curl http://localhost:8080/roadmap/city
-```
-
-```json
-[{"rid":"#12:0","name":"San José"},{"rid":"#12:1","name":"Heredia"},{"rid":"#12:2","name":"Alajuela"}]
-```
-
-```
-curl http://localhost:8080/roadmap/road
-```
-
-```json
-[{"rid":"#13:0","name":"Ruta 3","distanceKms":12,"from":{"rid":"#12:1","name":"Heredia"},"to":{"rid":"#12:0","name":"San José"}},{"rid":"#13:1","name":"Ruta 1","distanceKms":20,"from":{"rid":"#12:2","name":"Alajuela"},"to":{"rid":"#12:0","name":"San José"}},{"rid":"#13:2","name":"Ruta 3","distanceKms":12,"from":{"rid":"#12:0","name":"San José"},"to":{"rid":"#12:1","name":"Heredia"}},{"rid":"#13:3","name":"Ruta 1","distanceKms":20,"from":{"rid":"#12:0","name":"San José"},"to":{"rid":"#12:2","name":"Alajuela"}},{"rid":"#13:4","name":"Ruta 3","distanceKms":13,"from":{"rid":"#12:1","name":"Heredia"},"to":{"rid":"#12:2","name":"Alajuela"}},{"rid":"#13:5","name":"Ruta 3","distanceKms":13,"from":{"rid":"#12:2","name":"Alajuela"},"to":{"rid":"#12:1","name":"Heredia"}}]
-```
-
-## Referencias
-
-Ejemplo basado en la herramienta y ejemplo de eugene-kamenev
-
-https://github.com/eugene-kamenev/orientdb-spring-boot-example
-
-https://github.com/eugene-kamenev/orientdb-groovy

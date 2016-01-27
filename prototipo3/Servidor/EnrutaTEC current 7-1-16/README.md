@@ -31,7 +31,7 @@ Definir la configuración en variables de ambiente en intellij esto es a base de
 
 -Correr el proyecto de intellij con el botón de run.
 
--En caso de que de errores por el autowiring, ir a consola y correr el gradle manualmente. Esto se logra llendo al folder root del proyecto y haciedo
+-En caso de que de errores por el autowiring, ir a consola y correr el gradle manualmente. Esto se logra llendo al folder root del proyecto y escribiendo
 
 $> gradle clean
 $> gradle build
@@ -73,5 +73,7 @@ Con `postman` o `curl` enviar un `POST` a `http://localhost:8080/roadmap/batch` 
 }
 
 
-Si todo es correcto, Postman deberia retornar un estado 200 OK y en la direccion http://localhost:2480 deberia verse las tablas "routes" y "stops" creada con la informacion ingresada
+Si todo es correcto, Postman deberia retornar un estado 200 OK <br />
+ y en la direccion http://localhost:2480 deberia verse las <br />
+ tablas "routes" y "stops" creada con la informacion ingresada <br />
 ```
