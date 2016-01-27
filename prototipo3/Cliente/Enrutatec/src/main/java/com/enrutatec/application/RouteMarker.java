@@ -22,12 +22,12 @@ public class RouteMarker implements MapViewListener {
         this.activity = activity;
     }
 
-    public void setData(String name, int price, double duration, double distance){
+    /*public void setData(String name, int price, double duration, double distance){
         this.name = name;
         this.price = price;
         this.duration = duration;
         this.distance = distance;
-    }
+    }*/
 
     public String getName() {
         return name;

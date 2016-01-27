@@ -8,17 +8,17 @@ import android.util.Log;
 
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
+import com.enrutatec.model.Stop;
 import com.mapbox.mapboxsdk.geometry.LatLng;
 import com.enrutatec.application.MainActivity;
 import com.enrutatec.model.Route;
 import com.enrutatec.services.RoutesManagerService;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class RoutesManagerServiceImpl implements RoutesManagerService{
 
-    private int price;
-    private String name;
     private Route finalRoute;
 
     private MaterialDialog priceDialog;
@@ -31,6 +31,7 @@ public class RoutesManagerServiceImpl implements RoutesManagerService{
         return null;
     }
 
+    //Set the route info with Dialogs
     @Override
     public void setRouteInfo(Route route, final MainActivity activity) {
         this.finalRoute=route;
@@ -57,7 +58,7 @@ public class RoutesManagerServiceImpl implements RoutesManagerService{
                 .onNeutral(new MaterialDialog.SingleButtonCallback() {
                     @Override
                     public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-                        addStop(finalRoute, new LatLng(activity.getLatitude(), activity.getLongitude()));
+                        addStop(new LatLng(activity.getLatitude(),activity.getLongitude()));
                     }
                 })
                 .show();
@@ -80,7 +81,6 @@ public class RoutesManagerServiceImpl implements RoutesManagerService{
                     public void onInput(MaterialDialog dialog, CharSequence input) {
                         Log.d("CREATION", input.toString());
                         finalRoute.setName(input.toString());
-
                         nameDialog.dismiss();
 
                     }
@@ -88,12 +88,13 @@ public class RoutesManagerServiceImpl implements RoutesManagerService{
                 .onNeutral(new MaterialDialog.SingleButtonCallback() {
                     @Override
                     public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-                        addStop(finalRoute,new LatLng(activity.getLatitude(),activity.getLongitude()));
+                        addStop(new LatLng(activity.getLatitude(),activity.getLongitude()));
                     }
                 })
                 .show();
     }
 
+    //Show the route info when the marker is pressed
     @Override
     public void showRouteInfo(MainActivity activity, String name, double duration, long price, double distance) {
         new MaterialDialog.Builder(activity)
@@ -103,6 +104,7 @@ public class RoutesManagerServiceImpl implements RoutesManagerService{
                 .show();
     }
 
+    //Calculate the distance between two points
     @Override
     public double calcDistance(List<LatLng> coordinates) {
         double distance = 0;
@@ -110,20 +112,28 @@ public class RoutesManagerServiceImpl implements RoutesManagerService{
             distance+=coordinates.get(i).distanceTo(coordinates.get(i + 1));
         }
         Log.d("CREATION", String.valueOf(distance));
-        return distance/1000;
+        return distance;
     }
 
+
     @Override
-    public void addCoordinate(Route route, LatLng coordinate) {
+    public void addCoordinate(Route route, LatLng coordinate){
         List<LatLng> coordinates = route.getCoordinates();
         coordinates.add(coordinate);
         route.setCoordinates(coordinates);
     }
 
+    //Return a new stop
     @Override
-    public void addStop(Route route, LatLng stop) {
-        List<LatLng> stops = route.getStops();
-        stops.add(stop);
-        route.setStops(stops);
+    public Stop addStop(LatLng stop) {
+        double price = finalRoute.getPrice();
+        String stopName = String.valueOf(stop.getLatitude())+"/"+String.valueOf(stop.getLongitude());
+        LatLng coordinate = stop;
+        List<String> routes = new ArrayList<String>();
+        routes.add(finalRoute.getName());
+        //List<LatLng> stops = route.getStops();
+        //stops.add(stop);
+        //route.setStops(stops);
+        return new Stop(stopName,coordinate,price,routes);
     }
 }

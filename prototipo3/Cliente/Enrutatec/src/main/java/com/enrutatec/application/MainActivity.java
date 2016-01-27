@@ -11,6 +11,7 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -23,6 +24,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.crashlytics.android.Crashlytics;
+import com.enrutatec.model.Stop;
 import com.mapbox.mapboxsdk.geometry.LatLng;
 import com.mapbox.mapboxsdk.overlay.Marker;
 import com.mapbox.mapboxsdk.overlay.PathOverlay;
@@ -35,10 +37,17 @@ import com.enrutatec.services.RoutesManagerService;
 import com.enrutatec.services.impl.RoutesManagerServiceImpl;
 import com.enrutatec.application.R;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+
+import static java.util.concurrent.TimeUnit.NANOSECONDS;
 
 public class MainActivity extends AppCompatActivity implements LocationListener {
-
     private MapView mv;
     private MapController mapController;
 
@@ -70,15 +79,17 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
 
     RouteController routeController = new RouteController();
 
-    //URL de conexión
-    private static String URL = "http://10.0.150.200:8080/roadmap/batch";
+    //URL connection
+    private static String URL = "http://186.32.26.170:8080/roadmap/batch";
+
+    private List<Stop> stops = new ArrayList<Stop>();
+    private List<Route> routes = new ArrayList<Route>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Crashlytics.start(this);
         setContentView(R.layout.activity_main);
-
 
         stopButton = (Button) findViewById(R.id.parada);
         stopButton.setVisibility(View.GONE);
@@ -107,7 +118,6 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
         mv.getUserLocationOverlay().setTrackingMode(UserLocationOverlay.TrackingMode.FOLLOW_BEARING);
         mv.getUserLocationOverlay().setTrackingMode(UserLocationOverlay.TrackingMode.NONE);
 
-
         mv.loadFromGeoJSONURL("https://gist.githubusercontent.com/tmcw/10307131/raw/21c0a20312a2833afeee3b46028c3ed0e9756d4c/map.geojson");
 
         mapController.setCenter(currentPoint);
@@ -133,15 +143,16 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
         mv.setMapViewListener(routeMarker);
     }
 
+    //Creates a marker specifying a position
     public void newMarker(LatLng position, Route route){
-        routeMarker.setData(route.getName(), route.getPrice(), route.getDuracion(), route.getDistancia());
-        Marker x = new Marker(route.getName()+"/"+route.getPrice()+"/"+route.getDuracion()+"/"+route.getDistancia(),"", position);
+        //routeMarker.setData(route.getName(), route.getPrice(), route.getDuracion(), route.getDistancia());
+        Marker x = new Marker("","", position);
         mv.addMarker(x);
     }
 
+    //Extra options
 	@Override
-	public boolean onCreateOptionsMenu(Menu menu)
-	{
+	public boolean onCreateOptionsMenu(Menu menu){
 		MenuInflater menuInflater = getMenuInflater();
 		menuInflater.inflate(R.menu.menu_activity_main, menu);
 		return super.onCreateOptionsMenu(menu);
@@ -177,7 +188,7 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
                 @Override
                 public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                     if (actionId == EditorInfo.IME_ACTION_SEARCH) {
-                        doSearch();
+                        //doSearch();
                         return true;
                     }
                     return false;
@@ -196,10 +207,6 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
             isSearchOpened = true;
         }
     }
-
-    public void doSearch(){
-        //TODO
-    };
 
     @Override
     public void onBackPressed() {
@@ -231,15 +238,17 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
         return super.onOptionsItemSelected(item);
 	}
 
+    //When the location changes it resets the latitude and longitude
     @Override
     public void onLocationChanged(Location location) {
         latitude =  (location.getLatitude());
         longitude =  (location.getLongitude());
         LatLng newPosition = new LatLng(latitude, longitude);
 
-
         mapController.setCenter(newPosition);
 
+
+        //Start drawing the route
         if(startDrawing){
             routeManager.addCoordinate(route, newPosition);
             line.addPoint(newPosition);
@@ -247,6 +256,7 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
         }
     }
 
+    //Start an action depending on the action in the button
     public void setStartDrawing(View view) throws IOException {
         this.startDrawing=!startDrawing;
         TextView tx=(TextView) findViewById(R.id.drawingButton);
@@ -255,6 +265,9 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
             stopButton.setVisibility(View.VISIBLE);
             startTime = System.nanoTime();
             routeManager.setRouteInfo(route, this);
+
+            stops.add(routeManager.addStop(new LatLng(latitude, longitude)));
+
             routeManager.addCoordinate(route, new LatLng(latitude, longitude));
             line.addPoint(new LatLng(latitude, longitude));
             mv.getOverlays().add(line);
@@ -262,21 +275,40 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
         }
         else{
             stopButton.setVisibility(View.GONE);
-            route.setDuracion((System.nanoTime() - startTime) / 60000000000.0);
-            route.setDistancia(routeManager.calcDistance(route.getCoordinates()));
-            routeController.doPost(URL, route.toJSON().toString());
-            newMarker(route.getCoordinates().get(0), route);
+
+            stops.add(routeManager.addStop(new LatLng(latitude, longitude)));
+
+            stops.get(0).setPrice(stops.get(1).getPrice());
+            stops.get(0).setRoutes(stops.get(1).getRoutes());
+
+            routes.add(new Route(stops.get(stops.size() - 2).getName(), stops.get(stops.size() - 1).getName(), routeManager.calcDistance(route.getCoordinates()), NANOSECONDS.toSeconds(System.nanoTime() - startTime), route.getName(), route.getPrice(), route.getCoordinates()));
+            route.setCoordinates(new ArrayList<LatLng>());
+
+            routeController.doPost(URL, toJSON().toString());
+
+            //newMarker(route.getCoordinates().get(0), route);
             tx.setText("Iniciar");
             line = new PathOverlay(Color.parseColor("#77DD77"), 7);
+            Log.v("PRUEBA", routes.toString());
+            Log.v("PRUEBA",toJSON().toString());
+
+            stops = new ArrayList<Stop>();
+            routes = new ArrayList<Route>();
             route = new Route();
+
         }
     }
 
+    //Create a new stop
     public void setNewBusStop(View view){
-        routeManager.addStop(route, new LatLng(latitude, longitude));
+
+        stops.add(routeManager.addStop(new LatLng(latitude, longitude)));
+
+        routes.add(new Route(stops.get(stops.size() - 2).getName(), stops.get(stops.size() - 1).getName(), routeManager.calcDistance(route.getCoordinates()), NANOSECONDS.toSeconds(System.nanoTime() - startTime), route.getName(),route.getPrice(), route.getCoordinates()));
+        route.setCoordinates(new ArrayList<LatLng>());
     }
 
-    public void getUserLoc(View view){ mapController.setCenter(new LatLng(latitude,longitude)); }
+    public void getUserLoc(View view){ mapController.setCenter(new LatLng(latitude, longitude)); }
 
     @Override
     public void onStatusChanged(String s, int i, Bundle bundle) {}
@@ -293,5 +325,70 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
 
     public double getLatitude() {
         return latitude;
+    }
+
+    //Create the JSON
+    public JSONObject toJSON(){
+        JSONArray JSONstops = new JSONArray();
+        for(Stop stop : stops){
+            JSONObject JSONstop = new JSONObject();
+
+            try {
+                JSONstop.put("name",stop.getName());
+                JSONstop.put("latitude",stop.getCoordinate().getLatitude());
+                JSONstop.put("longitude",stop.getCoordinate().getLongitude());
+                JSONstop.put("price",stop.getPrice());
+                JSONArray routeNames = new JSONArray();
+                for(String routeName : stop.getRoutes()){
+                    routeNames.put(routeName);
+                }
+                JSONstop.put("routes",routeNames);
+
+                JSONstops.put(JSONstop);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+
+        JSONArray JSONroutes = new JSONArray();
+        for(Route newRoute : routes){
+            Log.v("PRUEBA",newRoute.getFrom());
+            JSONObject JSONroute = new JSONObject();
+
+            try {
+                JSONroute.put("from",newRoute.getFrom());
+                JSONroute.put("to",newRoute.getTo());
+                JSONroute.put("distance",newRoute.getDistance());
+                JSONroute.put("duration",newRoute.getDuration());
+
+                JSONArray JSONcoordinates = new JSONArray();
+
+                for(LatLng coordinate : newRoute.getCoordinates()){
+                    JSONArray point = new JSONArray();
+
+                    point.put(coordinate.getLatitude());
+                    point.put(coordinate.getLongitude());
+
+                    JSONcoordinates.put(point);
+                }
+
+                JSONroute.put("coordinate",JSONcoordinates);
+                JSONroutes.put(JSONroute);
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+
+        JSONObject finalJSON = new JSONObject();
+
+        try {
+            finalJSON.put("stops",JSONstops);
+            finalJSON.put("routes",JSONroutes);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        return finalJSON;
     }
 }
