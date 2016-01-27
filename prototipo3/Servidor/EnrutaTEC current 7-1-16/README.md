@@ -73,7 +73,7 @@ Con `postman` o `curl` enviar un `POST` a `http://localhost:8080/roadmap/batch` 
 }
 
 
-Si todo es correcto, Postman deberia retornar un estado 200 OK <br />
- y en la direccion http://localhost:2480 deberia verse las <br />
- tablas "routes" y "stops" creada con la informacion ingresada <br />
+Si todo es correcto, Postman deberia retornar un estado 200 OK 
+ y en la direccion http://localhost:2480 deberia verse las 
+ tablas "routes" y "stops" creada con la informacion ingresada 
 ```
