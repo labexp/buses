@@ -2,3 +2,4 @@
 
 exports.actuator = require('./actuator');
 exports.routes = require('./routes');
+exports.locations = require('./location');
