@@ -1,31 +1,28 @@
 source 'https://rubygems.org'
 
 #OSM api client
-gem 'rosemary'
-
-#Autentication gem
-gem 'oauth'
-
-#Orientdb http client connection
-gem 'active-orient'
+gem 'rosemary', '0.4.4'
 
 #JSON object parser
-gem 'json'
+gem 'json', '1.8.3'
 
 #HTML Sanitizer
-gem 'sanitize'
+gem 'sanitize', '4.0.1'
 
-#Figaro set enviromental variables
-gem 'figaro'
+#HTTParty REST simple lib
+gem 'httparty', '0.11.0'
+
+#Haversine distance
+gem 'haversine', '0.3.0'
 
 #Testing gem
-gem 'test-unit'
+gem 'test-unit', '3.1.5'
 
 #Unit test complemet
-gem 'test-unit-full'
+gem 'test-unit-full', '0.0.3'
 
 #Testing coverage tool
-gem 'simplecov'
+gem 'simplecov', '0.10.0'
 
 
 

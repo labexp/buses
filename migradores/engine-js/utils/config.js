@@ -7,8 +7,8 @@ var config = {
         rootusr: process.env.BUSES_ODB_ROOT_USR || 'root',
         rootpwd: process.env.BUSES_ODB_ROOT_PWD || 'root',
         name: process.env.BUSES_ODB_NAME || 'buses',
-        usr: process.env.BUSES_ODB_USR || 'buses',
-        pwd: process.env.BUSES_ODB_PWD || 'buses'
+        usr: process.env.BUSES_ODB_USR || 'root',
+        pwd: process.env.BUSES_ODB_PWD || 'root'
     }
 };
 
