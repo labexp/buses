@@ -1,5 +1,5 @@
 
-var serverIp = "10.10.0.101";
+var serverIp = "127.0.0.1";
 var serverPort = "1234";
 
 function splitId(route){
