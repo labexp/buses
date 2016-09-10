@@ -3,7 +3,7 @@
 var _ = require('lodash');
 var deasync = require('deasync');
 var orientjs = require('orientjs');
-var promise = require('promise');
+var Promise = require('promise');
 
 var config = require('../utils/config');
 var log = require('../utils/logger');
@@ -41,7 +41,7 @@ var db = (function () {
                 throw err
             })
         } else {
-            return promise.resolve({})
+            return Promise.resolve({})
         }
     }).then(function () {
         done = true;

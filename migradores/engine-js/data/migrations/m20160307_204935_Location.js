@@ -1,12 +1,12 @@
 "use strict";
 
-var promise = require('promise');
+var Promise = require('promise');
 
 exports.name = "Location";
 
 exports.up = function (db) {
     return db.class.create('Location').then(function(location) {
-        return promise.all([
+        return Promise.all([
             location.property.create({name: 'point', type: 'EMBEDDED', linkedClass: 'Point'}),
             location.property.create({name: 'recordedOn', type: 'DATETIME'}),
             location.property.create({name: 'createdOn', type: 'DATETIME'}),
