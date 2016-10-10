@@ -11,7 +11,7 @@ Herramientas y librerías
 ------------
 - [Eclipse](https://www.eclipse.org/)
 - [Osmdroid](https://github.com/osmdroid/osmdroid): osmdroid-android-4.1
-- [OSMBonusPack](https://code.google.com/p/osmbonuspack/): osmbonuspack_v4.3
+- [OSMBonusPack](https://github.com/MKergall/osmbonuspack): osmbonuspack_v4.3
 - [Genymotion](http://www.genymotion.com/)
 - Android: Android 4.4.2 (API 19)
 
