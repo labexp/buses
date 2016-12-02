@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+
+    android:orientation="vertical"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:weightSum="1">
+
+
+
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="92dp"
+        android:background="@android:color/darker_gray"
+        android:weightSum="1">
+
+        <Button
+            android:id="@+id/btn_iniciar"
+            android:layout_gravity="center_horizontal"
+            android:background="@drawable/btn_iniciar"
+            android:clickable="true"
+            android:layout_width="wrap_content"
+            android:layout_height="59dp"
+            android:paddingStart="150dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginBottom="15dp" />
+
+
+    </LinearLayout>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center_horizontal">
+
+
+        <org.osmdroid.views.MapView android:id="@+id/map"
+
+            android:layout_width="match_parent"
+            android:layout_height="fill_parent" />
+
+        <android.support.design.widget.FloatingActionButton
+            android:layout_width="81dp"
+            android:layout_height="73dp"
+            android:layout_gravity="bottom|end"
+            android:layout_margin="@dimen/fab_margin"
+            android:src="@drawable/ic_action_info"
+            app:fabSize="mini"
+            app:backgroundTint="@android:color/darker_gray"
+            android:id="@+id/btn_info"/>
+
+        <android.support.design.widget.FloatingActionButton
+            android:layout_width="81dp"
+            android:layout_height="73dp"
+            android:layout_gravity="left|bottom"
+            android:layout_margin="@dimen/fab_margin"
+            android:src="@drawable/ic_action_stop"
+            app:fabSize="mini"
+            app:backgroundTint="@android:color/darker_gray"
+            android:id="@+id/btn_stop"/>
+
+
+    </FrameLayout>
+
+
+</LinearLayout>
+
